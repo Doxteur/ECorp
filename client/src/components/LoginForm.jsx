@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import axios from "axios";
 
-function LoginForm() {
+function LoginForm({setToken}) {
 
   const [error, setError] = useState("");
 
@@ -23,7 +23,10 @@ function LoginForm() {
       //set data.api_token to local storage
       localStorage.setItem("token", res.data.api_token);
 
-      if(res.data.status === "error"){
+      console.log(res.data);
+      if(res.data.status === "success"){
+        setToken(res.data.api_token);
+      }else{
         setError(res.data.message);
       }
     });
