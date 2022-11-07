@@ -40,7 +40,7 @@ class UserController extends Controller
             } else {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Password wrong'
+                    'message' => 'Mauvais mot de passe'
                 ]);
             }
         } else {

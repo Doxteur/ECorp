@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import axios from "axios";
 
 function LoginForm() {
+
+  const [error, setError] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted");
@@ -17,11 +20,12 @@ function LoginForm() {
     //fetch
     axios.post("http://127.0.0.1:8000/api/login",body).then((res) => {
 
-      console.log(res.data);
       //set data.api_token to local storage
       localStorage.setItem("token", res.data.api_token);
-      //log 
-      console.log(localStorage.getItem("token"));
+
+      if(res.data.status === "error"){
+        setError(res.data.message);
+      }
     });
   };
 
@@ -30,7 +34,7 @@ function LoginForm() {
       {" "}
       <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
         <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
-          <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
+          <h1 className="text-3xl font-semibold text-center text-purple-700">
             Sign in
           </h1>
           <form className="mt-6" onSubmit={(e) => handleSubmit(e)}>
@@ -60,20 +64,19 @@ function LoginForm() {
                 id="inputPassword"
               />
             </div>
-            <a href="#" className="text-xs text-purple-600 hover:underline">
-              Forget Password?
-            </a>
+          
             <div className="mt-6">
               <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
                 Login
               </button>
             </div>
+            <h1 className="font-bold text-red-600 m-2">{error}</h1>
           </form>
 
           <p className="mt-8 text-xs font-light text-center text-gray-700">
-            Don't have an account?
+            Vous n'avrez pas de compte ?{" "}
             <a href="#" className="font-medium text-purple-600 hover:underline">
-              Sign up
+              Créer un compte
             </a>
           </p>
         </div>
