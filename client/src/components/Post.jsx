@@ -21,7 +21,7 @@ function Post({ token, posts, setPosts }) {
 
   const postsList = posts.map((post) => {
     return (
-        <div className="p-4">
+        <div className="p-4" key={post.id}>
           <BasicCard post={post} />
         </div>
     );
