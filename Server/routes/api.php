@@ -17,7 +17,7 @@ use App\Http\Controllers\UserController;
 
 Route::middleware('auth:api')->get('/user', [UserController::class, 'index']);
 Route::middleware('auth:api')->post('/user', [UserController::class, 'store']);
-
+Route::post('/login', [UserController::class, 'login']);
 
 
 
