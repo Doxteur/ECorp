@@ -28,7 +28,7 @@ class UserController extends Controller
     }
     public function login(Request $request)
     {
-        $user = User::where('email', $request->name)->first();
+        $user = User::where('name', $request->name)->first();
         if ($user) {
             if ($user->password == $request->password) {
                 $user->api_token = Str::random(80);

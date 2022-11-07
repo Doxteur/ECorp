@@ -6,6 +6,7 @@ import { Routes, Route, Link } from "react-router-dom";
 
 import LoginForm from "./components/LoginForm";
 import Post from "./components/Post";
+import NavBar from "./components/NavBar";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -18,7 +19,6 @@ function App() {
       setToken(token);
     }
   }, []);
-  
 
   if(!token) {
     return <LoginForm setToken={setToken} />
@@ -26,8 +26,10 @@ function App() {
 
   return (
     <div className="App">
+
+      <NavBar />
        <Routes>
-        <Route path="/" element={<Post />} />
+        <Route path="/" element={<Post token={token} posts={posts} setPosts={setPosts}/>} />
       </Routes>
     </div>
   );

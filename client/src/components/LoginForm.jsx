@@ -2,8 +2,7 @@ import React, { useState } from "react";
 
 import axios from "axios";
 
-function LoginForm({setToken}) {
-
+function LoginForm({ setToken }) {
   const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
@@ -17,16 +16,12 @@ function LoginForm({setToken}) {
       password,
     };
 
-    //fetch
-    axios.post("http://127.0.0.1:8000/api/login",body).then((res) => {
-
-      //set data.api_token to local storage
-      localStorage.setItem("token", res.data.api_token);
-
-      console.log(res.data);
-      if(res.data.status === "success"){
+    //Try to login with the provided credentials
+    axios.post("http://127.0.0.1:8000/api/login", body).then((res) => {
+      if (res.data.api_token) {
         setToken(res.data.api_token);
-      }else{
+        localStorage.setItem("token", res.data.api_token);
+      } else {
         setError(res.data.message);
       }
     });
@@ -67,7 +62,7 @@ function LoginForm({setToken}) {
                 id="inputPassword"
               />
             </div>
-          
+
             <div className="mt-6">
               <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
                 Login
