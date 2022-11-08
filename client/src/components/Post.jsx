@@ -5,6 +5,7 @@ import BasicCard from "./BasicCard";
 import ModalAddPost from "./ModalAddPost";
 
 function Post({ token, posts, setPosts }) {
+
   useEffect(() => {
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -20,11 +21,29 @@ function Post({ token, posts, setPosts }) {
       });
   }, [token, setPosts]);
 
+  //remove post
+  const removePost = (id) => {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    axios
+      .delete(`http://www.localhost:8000/api/post/${id}`, {
+        headers: headers,
+      })
+      .then((res) => {
+        setPosts(posts.filter((post) => post.id !== id));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+ 
   const postsList = posts.map((post) => {
     return (
       <div className="p-4" key={post.id}>
         <ModalAddPost token={token}/>
-        <BasicCard post={post} />
+        <BasicCard post={post} removePost={removePost} />
       </div>
     );
   });

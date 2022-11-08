@@ -16,7 +16,10 @@ const bull = (
     </Box>
   );
   
-export default function BasicCard({post}) {
+export default function BasicCard({post, removePost}) {
+
+
+
     return (
       <Card >
         <CardContent>
@@ -32,8 +35,8 @@ export default function BasicCard({post}) {
         <CardActions>
           <Button size="small">Learn More</Button>
           <div className='m-auto'>
-          <Button size="small" variant="contained" color="success">Modifier</Button>
-          <Button size="small" variant="contained" color="error">Supprimer</Button>
+          <button size="small" className='btn btn-warning btn-sm' onClick={(e) => alert(e)}>Modifier</button>
+          <button size="small" className='btn btn-error btn-sm' onClick={(e) => removePost(post.id)}>Supprimer</button>
           </div>
         </CardActions>
       </Card>
