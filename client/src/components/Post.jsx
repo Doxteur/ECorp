@@ -5,7 +5,8 @@ import BasicCard from "./BasicCard";
 import ModalAddPost from "./ModalAddPost";
 
 function Post({ token, posts, setPosts }) {
-
+  
+  // On loading Get Posts
   useEffect(() => {
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -38,11 +39,33 @@ function Post({ token, posts, setPosts }) {
         console.log(err);
       });
   };
- 
+
+  //Add post
+  const addPost = (e) => {
+    e.preventDefault();
+
+    const body = {
+      title: e.target.title.value,
+      body: e.target.content.value,
+    };
+
+    axios
+      .post("http://localhost:8000/api/post?api_token=" + token, body)
+      .then((res) => {
+        setPosts([...posts, res.data]);
+        //close modal
+        document.getElementById("my-modal-4").checked = false;
+        //enable button
+        // e.target.querySelector("button").disabled = false;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const postsList = posts.map((post) => {
     return (
       <div className="p-4" key={post.id}>
-        <ModalAddPost token={token}/>
         <BasicCard post={post} removePost={removePost} />
       </div>
     );
@@ -53,9 +76,8 @@ function Post({ token, posts, setPosts }) {
       <label htmlFor="my-modal-4" className="btn btn-success mt-4">
         Ajouter un post
       </label>
-      <div className="grid grid-cols-1 gap-2 m-auto md:w-1/3 ">
-        {postsList}
-      </div>
+      <ModalAddPost token={token} addPost={addPost} />
+      <div className="grid grid-cols-1 gap-2 m-auto md:w-1/3 ">{postsList}</div>
     </>
   );
 }
