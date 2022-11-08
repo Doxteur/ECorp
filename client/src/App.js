@@ -7,6 +7,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
 import Post from "./components/Post";
 import NavBar from "./components/NavBar";
+import EditPost from "./components/EditPost";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -30,6 +31,7 @@ function App() {
       <NavBar />
        <Routes>
         <Route path="/" element={<Post token={token} posts={posts} setPosts={setPosts}/>} />
+        <Route path="/editpost/:id" element={<EditPost token={token} posts={posts} setPosts={setPosts}/>} />
       </Routes>
     </div>
   );

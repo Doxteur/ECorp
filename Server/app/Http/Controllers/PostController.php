@@ -12,7 +12,14 @@ class PostController extends Controller
     //
     public function index()
     {
-        return Post::all();
-
+        return Post::orderBy('created_at', 'desc')->get();
+    }
+    public function store(Request $request)
+    {
+        $post = new Post;
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->save();
+        return $post;
     }
 }

@@ -18,7 +18,7 @@ const bull = (
   
 export default function BasicCard({post}) {
     return (
-      <Card sx={{ minWidth: 275 }}>
+      <Card >
         <CardContent>
        
           <Typography variant="body2">
@@ -31,6 +31,10 @@ export default function BasicCard({post}) {
         </CardContent>
         <CardActions>
           <Button size="small">Learn More</Button>
+          <div className='m-auto'>
+          <Button size="small" variant="contained" color="success">Modifier</Button>
+          <Button size="small" variant="contained" color="error">Supprimer</Button>
+          </div>
         </CardActions>
       </Card>
     );
