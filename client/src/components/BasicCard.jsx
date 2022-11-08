@@ -17,8 +17,7 @@ const bull = (
 
 export default function BasicCard({ post, removePost }) {
   const imageLink = "http://127.0.0.1:8000/images/";
-
-  <img src={imageLink + post.image} alt="post" />;
+  
 
   return (
     <Card>
@@ -28,7 +27,12 @@ export default function BasicCard({ post, removePost }) {
           {post.body}
         </Typography>
         {/* Image */}
-        <img src={imageLink + post.image} alt="post" className=" m-auto"/>
+        {/* if no image  */}
+        {post.image ? (
+        <img src={imageLink + post.image} alt="post" className="m-auto" style={{width:300}}/>
+        ) : (
+          <img src="https://via.placeholder.com/250" alt="post" className="m-auto" style={{width:"250px"}}/>
+        )}
       </CardContent>
       <CardActions>
           <div className="m-auto">
