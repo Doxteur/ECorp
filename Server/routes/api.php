@@ -24,6 +24,7 @@ Route::post('/login', [UserController::class, 'login']);
 //Post
 Route::middleware('auth:api')->get('/post', [PostController::class, 'index']);
 Route::middleware('auth:api')->post('/post', [PostController::class, 'store']);
+Route::middleware('auth:api')->delete('/post/{id}', [PostController::class, 'destroy']);
 
 
 

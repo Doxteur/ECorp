@@ -22,4 +22,11 @@ class PostController extends Controller
         $post->save();
         return $post;
     }
+    public function destroy($id)
+    {
+        $post = Post::find($id);
+        $post->delete();
+        return $post;
+    }
+    
 }
