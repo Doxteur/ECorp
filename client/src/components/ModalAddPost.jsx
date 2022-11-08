@@ -1,7 +1,15 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 
 function ModalAddPost({ token, setPosts, addPost }) {
+
+  const [image, setImage] = React.useState(null);
+
+  useEffect(() => {
+    console.log(image);
+  }, [image]);
+      
+
   return (
     <div>
       {/* The button to open modal */}
@@ -25,6 +33,7 @@ function ModalAddPost({ token, setPosts, addPost }) {
                   id="title"
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline "
                   placeholder="Title"
+                  required
                 />
               </div>
               <div className="mb-4">
@@ -32,16 +41,36 @@ function ModalAddPost({ token, setPosts, addPost }) {
                   htmlFor="content"
                   className="block text-white text-sm font-bold mb-2"
                 >
-                  Content
+                  Ma phrase
                 </label>
-                <textarea
+                <input
                   name="content"
                   id="content"
-                  cols="30"
-                  rows="10"
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
-                  placeholder="Content"
-                ></textarea>
+                  placeholder="Ma phrase"
+                  required
+                ></input>
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="content"
+                  className="block text-white text-sm font-bold mb-2"
+                >
+                  Image
+                </label>
+
+                <input
+                  type="file"
+                  name="image"
+                  id="image"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                  onChange={(e) => setImage(e.target.files[0])}
+                  accept="image/png, image/gif, image/jpeg"
+                  required
+                  ></input>
+                <img src={image ? URL.createObjectURL(image) : ""} alt="" className="w-1/3"/>
+
+               
               </div>
               <div className="flex items-center justify-between">
                 <button className="btn btn-success" type="submit">
