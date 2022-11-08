@@ -3,6 +3,7 @@ import { useEffect,useState } from "react";
 import axios from "axios";
 import BasicCard from "./BasicCard";
 import ModalAddPost from "./ModalAddPost";
+import NavBar from "./NavBar";
 
 function Post({ token, posts, setPosts }) {
 
@@ -85,6 +86,8 @@ function Post({ token, posts, setPosts }) {
 
   return (
     <>
+            <NavBar />
+
       <label htmlFor="my-modal-4" className="btn btn-success mt-4">
         Ajouter un post
       </label>

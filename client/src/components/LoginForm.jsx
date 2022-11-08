@@ -33,7 +33,7 @@ function LoginForm({ setToken }) {
       <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
         <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
           <h1 className="text-3xl font-semibold text-center text-purple-700">
-            Sign in
+            Se Connecter
           </h1>
           <form className="mt-6" onSubmit={(e) => handleSubmit(e)}>
             <div className="mb-2">
@@ -72,8 +72,8 @@ function LoginForm({ setToken }) {
           </form>
 
           <p className="mt-8 text-xs font-light text-center text-gray-700">
-            Vous n'avrez pas de compte ?{" "}
-            <a href="#" className="font-medium text-purple-600 hover:underline">
+            Vous n'avez pas de compte ?{" "}
+            <a href="/register" className="font-medium text-purple-600 hover:underline">
               Créer un compte
             </a>
           </p>

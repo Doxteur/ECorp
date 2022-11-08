@@ -50,4 +50,17 @@ class UserController extends Controller
             ]);
         }
     }
+    public function register(Request $request)
+    {
+        $user = new User();
+        $user->name = $request->name;
+        $user->password = $request->password;
+        $user->api_token = Str::random(80);
+        $user->save();
+        return response()->json([
+            'status' => 'success',
+            'api_token' => $user->api_token
+        ]);
+    }
 }
+
