@@ -1,6 +1,6 @@
 {
   "name": "ecorp",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "## Lancer le projet",
   "main": "index.js",
   "scripts": {
