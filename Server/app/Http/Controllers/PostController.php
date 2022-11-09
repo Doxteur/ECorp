@@ -21,6 +21,13 @@ class PostController extends Controller
     }
     public function store(Request $request)
     {
+        //Validate request
+        $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+            'image' => 'required|image|mimes:jpeg,jpg|max:2048',
+        ]);
+
         //store image
         $image = $request->file('image');
         $image_name = time() . '.' . $image->getClientOriginalExtension();

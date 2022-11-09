@@ -6,7 +6,6 @@ function Register({ token, setToken }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted");
     const name = e.target.elements.inputName.value;
     const password = e.target.elements.inputPassword.value;
 
@@ -20,7 +19,7 @@ function Register({ token, setToken }) {
       if (res.data.status === "success") {
         setStatus("success");
       } else {
-        setStatus("error");
+        setStatus(res.data.message);
       }
     });
   };

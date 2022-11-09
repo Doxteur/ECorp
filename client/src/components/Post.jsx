@@ -1,11 +1,15 @@
 import React from "react";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import BasicCard from "./BasicCard";
 import ModalAddPost from "./ModalAddPost";
 import NavBar from "./NavBar";
 
 function Post({ token, posts, setPosts }) {
+  function handleErrors(err) {
+    localStorage.removeItem("token");
+    window.location.href = "/?error=" + err.response.status;
+  }
 
   // On loading Get Posts
   useEffect(() => {
@@ -17,10 +21,9 @@ function Post({ token, posts, setPosts }) {
       .get("http://www.localhost:8000/api/post", { headers: headers })
       .then((res) => {
         setPosts(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        handleErrors(err);
       });
   }, [token, setPosts]);
 
@@ -38,8 +41,8 @@ function Post({ token, posts, setPosts }) {
         setPosts(posts.filter((post) => post.id !== id));
       })
       .catch((err) => {
-        console.log(err);
-      });
+        handleErrors(err)
+    });
   };
 
   //Add postw
@@ -69,24 +72,23 @@ function Post({ token, posts, setPosts }) {
         setPosts([res.data, ...posts]);
         //close modal
         document.getElementById("my-modal-4").checked = false;
-        console.log(res);
       })
       .catch((err) => {
-        console.log(err);
+        handleErrors(err)
       });
   };
 
   const postsList = posts.map((post) => {
     return (
       <div className="p-4" key={post.id}>
-        <BasicCard post={post} removePost={removePost} />  
+        <BasicCard post={post} removePost={removePost} />
       </div>
     );
   });
 
   return (
     <>
-            <NavBar />
+      <NavBar />
 
       <label htmlFor="my-modal-4" className="btn btn-success mt-4">
         Ajouter un post
