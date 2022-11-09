@@ -23,8 +23,10 @@ function App() {
     }
   }, []);
 
-  if(!token && window.location.pathname !== "/register") {
-    return <LoginForm setToken={setToken} />
+  if(window.location.pathname !== "/register"){
+    if(!token) {
+      return <LoginForm setToken={setToken} />
+    }
   }
 
   return (

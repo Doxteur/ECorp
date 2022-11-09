@@ -145,9 +145,6 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem>
-                <Typography textAlign="center">Profile</Typography>
-              </MenuItem>
               <MenuItem onClick={handleLogOut}>
                 <Typography textAlign="center">Se Déconnecter</Typography>
               </MenuItem>

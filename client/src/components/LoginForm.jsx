@@ -1,13 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import axios from "axios";
 
 function LoginForm({ setToken }) {
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    //if their is ?error
+    if (window.location.href.includes("?error=")) {
+      switch (window.location.href.split("?error=")[1]) {
+        case "401":
+          setError("Mauvais Token, veuillez vous reconnecter");
+          break;
+        case "403":
+          setError("Vous n'avez pas les droits");
+          break;
+        case "404":
+          setError("Page non trouvée");
+          break;
+        default:
+          setError("Erreur inconnue");
+          break;
+      }
+    }
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted");
     const name = e.target.elements.inputName.value;
     const password = e.target.elements.inputPassword.value;
 
@@ -73,7 +92,10 @@ function LoginForm({ setToken }) {
 
           <p className="mt-8 text-xs font-light text-center text-gray-700">
             Vous n'avez pas de compte ?{" "}
-            <a href="/register" className="font-medium text-purple-600 hover:underline">
+            <a
+              href="/register"
+              className="font-medium text-purple-600 hover:underline"
+            >
               Créer un compte
             </a>
           </p>

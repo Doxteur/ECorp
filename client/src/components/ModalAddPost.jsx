@@ -5,10 +5,7 @@ function ModalAddPost({ token, setPosts, addPost }) {
 
   const [image, setImage] = React.useState(null);
 
-  useEffect(() => {
-    console.log(image);
-  }, [image]);
-      
+ 
 
   return (
     <div>
