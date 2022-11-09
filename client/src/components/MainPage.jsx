@@ -16,20 +16,21 @@ function MainPage() {
                 sequence={[
                   "",
                   1000,
-                  "E", 
+                  "E",
                   1000,
                   "Evil",
-                  500, 
+                  500,
                   () => {
-                    document.querySelector(".text-white").style.color = "#ef4444";
+                    document.querySelector(".text-white").style.color =
+                      "#ef4444";
                   },
-                  "Evil Corp", 
-                  1000, 
-                  "E", 
+                  "Evil Corp",
+                  1000,
+                  "E",
                   () => {
                     document.querySelector(".text-white").style.color = "white";
                   },
-                  1000, 
+                  1000,
                   "E Corp Social",
                   (e) => {
                     //find word Social in e and change color
@@ -46,14 +47,14 @@ function MainPage() {
             </p>
           </h1>
 
-          <h1 className="mt-3 text-2xl">
-            Cliquer pour se connecter{" "}
-            <a href="/post">
-            <code className="p-3 font-mono text-lg bg-success text-black rounded-md hover:animate-pulse cursor-pointer">
-              Poster !
-            </code>
+          <div className="flex align-baseline items-baseline">
+            <h1 className="mt-3 text-2xl mx-2">Cliquer pour se connecter </h1>
+            <a href="/post" className=" hover:animate-pulse">
+              <code className="p-3 font-mono text-lg bg-success text-black rounded-md cursor-pointer">
+                Poster !
+              </code>
             </a>
-          </h1>
+          </div>
         </main>
       </div>
 

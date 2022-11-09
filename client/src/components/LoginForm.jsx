@@ -55,19 +55,26 @@ function LoginForm({ setToken }) {
     //replace text
     socialText.innerHTML = socialText.innerHTML.replace(
       "Social",
-      '<span style="color:#2563EB;" id="stealText">Steal</span>'
+      '<span style="color:#ef4444;" id="stealText">Steal</span>'
     );
+    //wait 
+    setTimeout(() => {
+      //replace text
+      socialText.innerHTML = socialText.innerHTML.replace(
+        "Steal",
+        '<span style="color:#2563EB;" id="socialText">Social</span>'
+      );
+    }
+    , 400);
   };
-  
-
 
   return (
     <div>
       {" "}
       <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
         <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
-          <h1 className="text-4xl font-bold text-center text-black"  onMouseEnter={flicker} id="socialText">
-            E-Corp Social
+          <h1 className="text-4xl font-bold text-center text-black"  id="socialText">
+            E-Corp <span className="text-secondary" onMouseOver={flicker}> Social</span>
           </h1>
           <form className="mt-6" onSubmit={(e) => handleSubmit(e)}>
             <div className="mb-2">
