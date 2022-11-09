@@ -16,16 +16,6 @@ class UserController extends Controller
         return User::all();
     }
 
-    public function store(Request $request)
-    {
-        
-        $user = new User();
-        $user->name = "test2";
-        $user->email = "test2";
-        $user->password = "test2";
-        $user->save();
-        return dd($request->all());
-    }
     public function login(Request $request)
     {
         $user = User::where('name', $request->name)->first();
@@ -52,6 +42,16 @@ class UserController extends Controller
     }
     public function register(Request $request)
     {
+        //Gestion cas erreur si l'utilisateur existe déjà
+        $userCheck = User::where('name',$request->name)->first();
+        if($userCheck){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nom d\'utilisateur déjà utilisé'
+            ]);
+        }           
+
+        //Création de l'utilisateur
         $user = new User();
         $user->name = $request->name;
         $user->password = $request->password;

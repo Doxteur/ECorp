@@ -36,13 +36,17 @@ function LoginForm({ setToken }) {
     };
 
     //Try to login with the provided credentials
-    axios.post("http://127.0.0.1:8000/api/login", body).then((res) => {
+    axios.post("http://127.0.0.1:8000/api/login", body)
+    .then((res) => {
       if (res.data.api_token) {
         setToken(res.data.api_token);
         localStorage.setItem("token", res.data.api_token);
       } else {
         setError(res.data.message);
-      }
+      }})
+    .catch((err) => {
+      setError(err.message);
+      
     });
   };
 

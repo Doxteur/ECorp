@@ -62,7 +62,7 @@ function ModalAddPost({ token, setPosts, addPost }) {
                   id="image"
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
                   onChange={(e) => setImage(e.target.files[0])}
-                  accept="image/png, image/gif, image/jpeg"
+                  accept="image/jpg, image/jpeg"
                   required
                   ></input>
                 <img src={image ? URL.createObjectURL(image) : ""} alt="" className="w-1/3"/>

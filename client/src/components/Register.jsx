@@ -19,7 +19,7 @@ function Register({ token, setToken }) {
       if (res.data.status === "success") {
         setStatus("success");
       } else {
-        setStatus("error");
+        setStatus(res.data.message);
       }
     });
   };
