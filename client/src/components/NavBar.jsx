@@ -10,7 +10,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <div className="navbar bg-slate-900">
+    <div className="navbar bg-primary">
     <div className="flex-1">
       <a className="btn btn-ghost normal-case text-xl"><AdbIcon/>ECorp</a>
     </div>

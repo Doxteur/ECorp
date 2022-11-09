@@ -1,16 +1,13 @@
-import logo from "./logo.svg";
 import "./App.css";
-
 import React, { useEffect, useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import { Routes, Route, Link,Navigate } from "react-router-dom";
 
+// Components
 import LoginForm from "./components/LoginForm";
 import Post from "./components/Post";
-import NavBar from "./components/NavBar";
-import EditPost from "./components/EditPost";
 import Register from "./components/Register";
-import { createTheme } from '@mui/material/styles';
+import ModalEditPost from "./components/ModalEditPost";
+import MainPage from "./components/MainPage";
 
 
 function App() {
@@ -24,7 +21,7 @@ function App() {
     }
   }, []);
 
-  if (window.location.pathname !== "/register") {
+  if (window.location.pathname !== "/register" && window.location.pathname !== "/") {
     if (!token) {
       return (
         <div className="App">
@@ -37,13 +34,18 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route
+
+      <Route
           path="/"
+          element={<MainPage/>}
+        />
+        <Route
+          path="/post"
           element={<Post token={token} posts={posts} setPosts={setPosts} />}
         />
         <Route
           path="/editpost/:id"
-          element={<EditPost token={token} posts={posts} setPosts={setPosts} />}
+          element={<ModalEditPost token={token} posts={posts} setPosts={setPosts} />}
         />
         <Route
           path="/register"
