@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import BasicCard from "./BasicCard";
 import ModalAddPost from "./ModalAddPost";

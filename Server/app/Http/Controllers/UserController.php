@@ -10,14 +10,24 @@ use Symfony\Component\VarDumper\VarDumper;
 
 class UserController extends Controller
 {
-    //
+    //Retourn la liste des utilisateurs
     public function index()
     {
         return User::all();
     }
 
+    //Récupérer un utilisateur par son id
+    //Non utilisé dans l'application
+    public function show($id)
+    {
+        return User::find($id);
+    }
+
+    //Authentification
     public function login(Request $request)
     {
+        //Verification du mot de passe
+        //A ajouter hashage de mot de passe
         $user = User::where('name', $request->name)->first();
         if ($user) {
             if ($user->password == $request->password) {

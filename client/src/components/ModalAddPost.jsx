@@ -1,11 +1,8 @@
-import axios from "axios";
-import React, { useEffect } from "react";
+  import React from "react";
 
-function ModalAddPost({ token, setPosts, addPost }) {
+function ModalAddPost({ addPost }) {
 
   const [image, setImage] = React.useState(null);
-
- 
 
   return (
     <div>
