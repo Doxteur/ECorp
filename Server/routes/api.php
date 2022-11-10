@@ -26,7 +26,8 @@ Route::middleware('auth:api')->get('/post', [PostController::class, 'index']);
 Route::middleware('auth:api')->post('/post', [PostController::class, 'store']);
 Route::middleware('auth:api')->delete('/post/{id}', [PostController::class, 'destroy']);
 
-
+//Utile seulement pour le tp d'ou la non précence de verif token 
+Route::get('/user/{id}', [UserController::class, 'show']);
 
 
 

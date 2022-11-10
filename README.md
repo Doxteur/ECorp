@@ -1,6 +1,10 @@
 
 # ECorp
 
+Ce projet est un réseau social fonctionnent avec:
+ - Front-end: React
+ - Back-end: Laravel
+
 ## Lancer le projet
 
 ### Coter serveur

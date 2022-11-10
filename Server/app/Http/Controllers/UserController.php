@@ -16,6 +16,11 @@ class UserController extends Controller
         return User::all();
     }
 
+    public function show($id)
+    {
+        return User::find($id);
+    }
+
     public function login(Request $request)
     {
         $user = User::where('name', $request->name)->first();

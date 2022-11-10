@@ -1,9 +1,10 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import BasicCard from "./BasicCard";
 import ModalAddPost from "./ModalAddPost";
 import NavBar from "./NavBar";
+import ModalEditPost from "./ModalEditPost";
 
 function Post({ token, posts, setPosts }) {
   function handleErrors(err) {
@@ -45,6 +46,7 @@ function Post({ token, posts, setPosts }) {
     });
   };
 
+
   //Add postw
   const addPost = (e) => {
     e.preventDefault();
@@ -78,6 +80,7 @@ function Post({ token, posts, setPosts }) {
       });
   };
 
+
   const postsList = posts.map((post) => {
     return (
       <div className="p-4" key={post.id}>
@@ -89,11 +92,12 @@ function Post({ token, posts, setPosts }) {
   return (
     <>
       <NavBar />
-
       <label htmlFor="my-modal-4" className="btn btn-success mt-4">
         Ajouter un post
       </label>
+     
       <ModalAddPost token={token} addPost={addPost} />
+      
       <div className="grid grid-cols-1 gap-2 m-auto md:w-1/3 ">{postsList}</div>
     </>
   );
