@@ -42,8 +42,7 @@ class UserController extends Controller
             } else {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Mauvais mot de passe',
-                    
+                    'message' => 'Mauvais mot de passe',  
                 ]);
             }
         } else {
@@ -65,7 +64,7 @@ class UserController extends Controller
                 'required',
                 'string',
                 'min:6',
-                'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
+                'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%*]).*$/',
             ]
             ]);
         //Gestion cas erreur si l'utilisateur existe déjà
@@ -88,4 +87,3 @@ class UserController extends Controller
         ]);
     }
 }
-
