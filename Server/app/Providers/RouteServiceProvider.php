@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\VarDumper\VarDumper;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -45,12 +46,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function configureRateLimiting()
     {
-        RateLimiter::for('global', function (Request $request) {
-            return Limit::perMinute(50);
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(1000)->by($request->user()?->api_token ?: $request->ip());
+            
         });
-        RateLimiter::for('perso', function (Request $request) {
-            return Limit::perMinute(50);
-        });
-        
     }
 }

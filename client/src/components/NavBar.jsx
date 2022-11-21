@@ -25,7 +25,6 @@ function ResponsiveAppBar() {
           </div>
         </label>
         <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-300 rounded w-52">
-         
           <li onClick={handleLogOut} className="rounded-xl text-white hover:text-secondary cursor-pointer font-bold ">Se déconnecter</li>
         </ul>
       </div>
