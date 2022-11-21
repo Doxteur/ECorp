@@ -19,7 +19,6 @@ function MainPage() {
                   "E",
                   1000,
                   "Evil",
-                  500,
                   () => {
                     document.querySelector(".text-white").style.color =
                       "#ef4444";
@@ -30,8 +29,8 @@ function MainPage() {
                   () => {
                     document.querySelector(".text-white").style.color = "white";
                   },
-                  1000,
-                  "E Corp Social",
+                  700,
+                  "E-Corp Social",
                   (e) => {
                     //find word Social in e and change color
                     e.innerHTML = e.innerHTML.replace(

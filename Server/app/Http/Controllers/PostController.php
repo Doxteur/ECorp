@@ -15,21 +15,23 @@ class PostController extends Controller
     
     public function index()
     {
-        $posts =Post::orderBy('created_at', 'desc')->get();
+        $posts = Post::orderBy('created_at', 'desc')->get();
        
         return response()->json($posts);
     }
     public function store(Request $request)
     {
+        
         //Validate request
         $request->validate([
             'title' => 'required',
             'body' => 'required',
-            'image' => 'required|image|mimes:jpeg,jpg|max:2048',
         ]);
 
         //store image
         $image = $request->file('image');
+
+        // A modifier
         $image_name = time() . '.' . $image->getClientOriginalExtension();
         $image->move(public_path('images'), $image_name);
         
