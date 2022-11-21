@@ -22,8 +22,8 @@ function MainPage() {
                   () => {
                     document.querySelector(".text-white").style.color =
                       "#ef4444";
-                  },
-                  "Evil Corp",
+                  },700,
+                  "E",
                   1000,
                   "E",
                   () => {
