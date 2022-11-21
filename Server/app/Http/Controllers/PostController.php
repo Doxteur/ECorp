@@ -30,6 +30,8 @@ class PostController extends Controller
 
         //store image
         $image = $request->file('image');
+
+        // A modifier
         $image_name = time() . '.' . $image->getClientOriginalExtension();
         $image->move(public_path('images'), $image_name);
         

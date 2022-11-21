@@ -17,8 +17,11 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', [UserController::class, 'index']);
+// a delete
+//Route::middleware('auth:api')->get('/user', [UserController::class, 'index']);
+
 Route::get('/user/{id}', [UserController::class, 'show']);
+
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
 
@@ -27,7 +30,10 @@ Route::middleware('auth:api')->get('/post', [PostController::class, 'index']);
 Route::middleware('auth:api')->post('/post', [PostController::class, 'store']);
 Route::middleware('auth:api')->delete('/post/{id}', [PostController::class, 'destroy']);
 
-
+Route::group(['middleware' => ['auth:api', 'throttle:perso']], function() {
+    
+    Route::get('/user', [UserController::class, 'index']);
+  });
 
 
 
