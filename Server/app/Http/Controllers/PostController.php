@@ -15,17 +15,17 @@ class PostController extends Controller
     
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'desc')->get();
+        $posts =Post::orderBy('created_at', 'desc')->get();
        
         return response()->json($posts);
     }
     public function store(Request $request)
     {
-        
         //Validate request
         $request->validate([
             'title' => 'required',
             'body' => 'required',
+            'image' => 'mimes:jpeg,jpg,png|required|max:10000' 
         ]);
 
         //store image
