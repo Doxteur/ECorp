@@ -55,7 +55,18 @@ class UserController extends Controller
     public function register(Request $request)
     {
         //Conditions mdp et name
-        $validator = $request->validate([
+       
+        //Gestion cas erreur si l'utilisateur existe déjà
+        $check = User::where('name',$request->name)->first();
+
+        
+        if($check){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nom d\'utilisateur déjà utilisé'
+            ]);
+        }
+        $request->validate([
             'name' => [
                 'required',
                 'string',
@@ -67,14 +78,8 @@ class UserController extends Controller
                 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%*]).*$/',
             ]
             ]);
-        //Gestion cas erreur si l'utilisateur existe déjà
-        $check = User::where('name',$request->name)->first();
-        if($check){
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Nom d\'utilisateur déjà utilisé'
-            ]);
-        }
+
+        
         //Création de l'utilisateur
         $user = new User();
         $user->name = $request->name;
