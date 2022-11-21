@@ -25,10 +25,13 @@ Route::get('/user/{id}', [UserController::class, 'show']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
 
-//Test 
-Route::middleware('auth:api')->get('/test', function(){
-    return "hello world";
-});
+//Test à enlever pour le main
+if(env('APP_ENV') === "local"){
+
+    Route::middleware('auth:api')->get('/test', function(){
+        return "hello world";
+    });
+}
 
 
 //Post
