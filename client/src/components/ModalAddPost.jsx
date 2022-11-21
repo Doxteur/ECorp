@@ -25,7 +25,7 @@ function ModalAddPost({ addPost }) {
                   type="text"
                   name="title"
                   id="title"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline "
+                  className="shadow appearance-none text-primary border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline "
                   placeholder="Title"
                   required
                 />
@@ -40,7 +40,7 @@ function ModalAddPost({ addPost }) {
                 <input
                   name="content"
                   id="content"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none text-primary border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Ma phrase"
                   required
                 ></input>
@@ -48,7 +48,7 @@ function ModalAddPost({ addPost }) {
               <div className="mb-4">
                 <label
                   htmlFor="content"
-                  className="block text-white text-sm font-bold mb-2"
+                  className="block text-primary text-sm font-bold mb-2"
                 >
                   Image
                 </label>
