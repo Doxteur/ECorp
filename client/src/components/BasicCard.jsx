@@ -46,7 +46,7 @@ export default function BasicCard({ post, removePost }) {
           <button
             size="small"
             className="btn btn-error btn-sm mx-2"
-            onClick={(e) => removePost(post.id)}
+            onClick={(e) => removePost(post.id,e)}
           >
             Supprimer
           </button>

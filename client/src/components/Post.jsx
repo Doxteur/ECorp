@@ -7,8 +7,7 @@ import NavBar from "./NavBar";
 
 function Post({ token, posts, setPosts }) {
   function handleErrors(err) {
-    localStorage.removeItem("token");
-    window.location.href = "/?error=" + err.response.status;
+    console.log(err);
   }
 
   // On loading Get Posts
@@ -28,7 +27,15 @@ function Post({ token, posts, setPosts }) {
   }, [token, setPosts]);
 
   //remove post
-  const removePost = (id) => {
+  const removePost = (id,e) => {
+    
+    //disable button
+    e.target.disabled = true;
+    //change bc
+    e.target.style.color = "black";
+    e.target.innerHTML = "Suppression en cours...";
+
+
     const headers = {
       Authorization: `Bearer ${token}`,
     };
@@ -39,6 +46,7 @@ function Post({ token, posts, setPosts }) {
       })
       .then((res) => {
         setPosts(posts.filter((post) => post.id !== id));
+        
       })
       .catch((err) => {
         handleErrors(err)
