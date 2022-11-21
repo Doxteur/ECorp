@@ -34,7 +34,7 @@ export default function BasicCard({ post, removePost, modifyPost }) {
       </CardContent>
       <CardActions>
         <div className="m-auto">
-          <label htmlFor="my-modal-3" className="btn btn-warning mt-4 btn-sm">
+          <label htmlFor="my-modal-3" className="btn btn-warning mt-4 btn-sm" id={post.id} onClick={(e) => modifyPost(e)}>
             Modifier
           </label>
           <button

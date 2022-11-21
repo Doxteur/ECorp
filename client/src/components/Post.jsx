@@ -7,8 +7,25 @@ import NavBar from "./NavBar";
 import ModalEditPost from "./ModalEditPost";
 
 function Post({ token, posts, setPosts }) {
+  const [modalPost, setModalPost] = React.useState(null);
   function handleErrors(err) {
     console.log(err);
+  }
+
+  function modifyPost(e) {
+    e.preventDefault();
+    console.log(e.target.id);
+    axios
+      .get(`http://localhost:8000/api/post/${e.target.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setModalPost(res.data);
+      })
+      .catch(handleErrors);
   }
 
   // On loading Get Posts
@@ -28,14 +45,12 @@ function Post({ token, posts, setPosts }) {
   }, [token, setPosts]);
 
   //remove post
-  const removePost = (id,e) => {
-    
+  const removePost = (id, e) => {
     //disable button
     e.target.disabled = true;
     //change bc
     e.target.style.color = "black";
     e.target.innerHTML = "Suppression en cours...";
-
 
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -47,17 +62,18 @@ function Post({ token, posts, setPosts }) {
       })
       .then((res) => {
         setPosts(posts.filter((post) => post.id !== id));
-        
       })
       .catch((err) => {
-        handleErrors(err)
-    });
+        handleErrors(err);
+      });
   };
-
 
   //Add postw
   const addPost = (e) => {
     e.preventDefault();
+
+    //disable button
+    e.target[3].disabled = true;
 
     const body = {
       title: e.target.title.value,
@@ -82,20 +98,28 @@ function Post({ token, posts, setPosts }) {
         setPosts([res.data, ...posts]);
         //close modal
         document.getElementById("my-modal-4").checked = false;
+        e.target[3].disabled = false;
       })
       .catch((err) => {
-        handleErrors(err)
+        handleErrors(err);
       });
   };
-
 
   const postsList = posts.map((post) => {
     return (
       <div className="p-4" key={post.id}>
-        <BasicCard post={post} removePost={removePost} />
+        <BasicCard
+          post={post}
+          removePost={removePost}
+          modifyPost={modifyPost}
+        />
       </div>
     );
   });
+
+  const modalEdit = modalPost ? (
+    <ModalEditPost token={token} modalPost={modalPost} setPost={setPosts} />
+  ) : null;
 
   return (
     <>
@@ -103,9 +127,8 @@ function Post({ token, posts, setPosts }) {
       <label htmlFor="my-modal-4" className="btn btn-success mt-4">
         Ajouter un post
       </label>
-     
+      {modalEdit}
       <ModalAddPost token={token} addPost={addPost} />
-      
       <div className="grid grid-cols-1 gap-2 m-auto md:w-1/3 ">{postsList}</div>
     </>
   );
