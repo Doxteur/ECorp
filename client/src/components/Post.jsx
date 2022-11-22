@@ -46,40 +46,31 @@ function Post({ token, posts, setPosts }) {
       })
       .catch(handleErrors);
   }
+
   // Modify the post when the user change the input
   function handleModify(e) {
     e.preventDefault();
-    console.log(e.target.id);
-    
-    const formData = new FormData();
-    
+
+    var formData = new FormData();
     formData.append("title", e.target.title.value);
-    formData.append("content", e.target.content.value);
+    formData.append("body", e.target.body.value);
     formData.append("image", e.target.image.files[0]);
 
     axios
-      .put(`http://localhost:8000/api/post/${e.target.id}`, formData, {
+      .put(`http://localhost:8000/api/post/${e.target.id.value}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
+        console.log(res.data);
         setPosts(
-          posts.map((post) => {
-            if (post.id === res.data.id) {
-              return res.data;
-            } else {
-              return post;
-            }
-          })
+          posts.map((post) => (post.id === res.data.id ? res.data : post))
         );
         setModalPost(null);
       })
       .catch(handleErrors);
   }
-
-
-
 
   // On loading Get Posts
   useEffect(() => {
@@ -176,7 +167,12 @@ function Post({ token, posts, setPosts }) {
   });
 
   const modalEdit = modalPost ? (
-    <ModalEditPost token={token} modalPost={modalPost} setPost={setPosts} handleModify={handleModify} />
+    <ModalEditPost
+      token={token}
+      modalPost={modalPost}
+      setPost={setPosts}
+      handleModify={handleModify}
+    />
   ) : null;
 
   return (

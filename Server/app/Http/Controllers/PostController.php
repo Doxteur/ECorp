@@ -67,6 +67,8 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
+
+        return json_encode($request->all());
         //Validate request
         $request->validate([
             'title' => 'required',
@@ -78,7 +80,6 @@ class PostController extends Controller
         $post = Post::find($id);
         $image_name = $post->image;
 
-        return($image_name);
         //delete from folder image if new image is uploaded
         if ($request->hasFile('image')) {
             $image_path = public_path('images/' . $post->image);
@@ -87,6 +88,7 @@ class PostController extends Controller
 
         //store image
         $image = $request->file('image');
+        
 
         // A modifier
         $image_name = time() . '.' . $image->getClientOriginalExtension();
