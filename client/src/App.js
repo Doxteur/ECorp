@@ -8,7 +8,7 @@ import Post from "./components/Post";
 import Register from "./components/Register";
 import ModalEditPost from "./components/ModalEditPost";
 import MainPage from "./components/MainPage";
-
+import InfiniteScroll from "./components/InfiniteScroll";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -51,6 +51,11 @@ function App() {
           path="/register"
           element={<Register token={token} posts={posts} setPosts={setPosts} />}
         />
+        <Route
+          path="/infinite"
+          element={<InfiniteScroll/>}
+        />
+
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>
