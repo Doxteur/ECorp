@@ -4,6 +4,7 @@ import axios from "axios";
 import BasicCard from "./BasicCard";
 import ModalAddPost from "./ModalAddPost";
 import NavBar from "./NavBar";
+import TwitterCard from "./TwitterCard";
 
 function Post({ token, posts, setPosts }) {
   function handleErrors(err) {
@@ -81,7 +82,7 @@ function Post({ token, posts, setPosts }) {
   const postsList = posts.map((post) => {
     return (
       <div className="p-4" key={post.id}>
-        <BasicCard post={post} removePost={removePost} />
+        <TwitterCard  />
       </div>
     );
   });

@@ -10,5 +10,10 @@
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "vite": "^3.0.0"
+    },
+    "dependencies": {
+        "install": "^0.13.0",
+        "npm": "^9.1.2",
+        "react-icons": "^4.6.0"
     }
 }
