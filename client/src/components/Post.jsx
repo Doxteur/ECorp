@@ -8,10 +8,29 @@ import ModalEditPost from "./ModalEditPost";
 
 function Post({ token, posts, setPosts }) {
   const [modalPost, setModalPost] = React.useState(null);
+  const [error, setError] = React.useState(null);
+
   function handleErrors(err) {
     console.log(err);
+    switch (err.response.status) {
+      case 401:
+        setError("You are not authorized to do this action");
+        break;
+      case 403:
+        setError("You are not authorized to do this action");
+        break;
+      case 404:
+        setError("This post does not exist");
+        break;
+      case 500:
+        setError("Le serveur a rencontré une erreur");
+        break;
+      default:
+        setError("Format supportés jpg,png et taille max 100Mo");
+    }
   }
 
+  // Show Modal with the post to edit
   function modifyPost(e) {
     e.preventDefault();
     console.log(e.target.id);
@@ -27,6 +46,40 @@ function Post({ token, posts, setPosts }) {
       })
       .catch(handleErrors);
   }
+  // Modify the post when the user change the input
+  function handleModify(e) {
+    e.preventDefault();
+    console.log(e.target.id);
+    
+    const formData = new FormData();
+    
+    formData.append("title", e.target.title.value);
+    formData.append("content", e.target.content.value);
+    formData.append("image", e.target.image.files[0]);
+
+    axios
+      .put(`http://localhost:8000/api/post/${e.target.id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setPosts(
+          posts.map((post) => {
+            if (post.id === res.data.id) {
+              return res.data;
+            } else {
+              return post;
+            }
+          })
+        );
+        setModalPost(null);
+      })
+      .catch(handleErrors);
+  }
+
+
+
 
   // On loading Get Posts
   useEffect(() => {
@@ -68,7 +121,7 @@ function Post({ token, posts, setPosts }) {
       });
   };
 
-  //Add postw
+  //Add post
   const addPost = (e) => {
     e.preventDefault();
 
@@ -99,8 +152,12 @@ function Post({ token, posts, setPosts }) {
         //close modal
         document.getElementById("my-modal-4").checked = false;
         e.target[3].disabled = false;
+        setError(null);
       })
       .catch((err) => {
+        e.target[3].disabled = false;
+        // set to red with text Ressayer
+        e.target[3].innerHTML = "Ressayer";
         handleErrors(err);
       });
   };
@@ -112,13 +169,14 @@ function Post({ token, posts, setPosts }) {
           post={post}
           removePost={removePost}
           modifyPost={modifyPost}
+          id={post.id}
         />
       </div>
     );
   });
 
   const modalEdit = modalPost ? (
-    <ModalEditPost token={token} modalPost={modalPost} setPost={setPosts} />
+    <ModalEditPost token={token} modalPost={modalPost} setPost={setPosts} handleModify={handleModify} />
   ) : null;
 
   return (
@@ -128,7 +186,7 @@ function Post({ token, posts, setPosts }) {
         Ajouter un post
       </label>
       {modalEdit}
-      <ModalAddPost token={token} addPost={addPost} />
+      <ModalAddPost token={token} addPost={addPost} error={error} />
       <div className="grid grid-cols-1 gap-2 m-auto md:w-1/3 ">{postsList}</div>
     </>
   );

@@ -1,10 +1,12 @@
 import * as React from "react";
+import { useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-export default function BasicCard({ post, removePost, modifyPost }) {
+
+export default function BasicCard({ post, removePost, modifyPost,id }) {
   const imageLink = "http://127.0.0.1:8000/images/";
 
   return (
