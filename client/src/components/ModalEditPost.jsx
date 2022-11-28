@@ -18,6 +18,7 @@ function ModalEditPost({ token, setPost, modalPost, handleModify }) {
         <label className="modal-box relative" htmlFor="">
           <div>
             <form onSubmit={(e) => handleModify(e)}>
+
               <input
                 type="hidden"
                 name="id"
@@ -67,7 +68,6 @@ function ModalEditPost({ token, setPost, modalPost, handleModify }) {
                   id="image"
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
                   accept="image/jpg, image/jpeg"
-                  required
                   ></input>
                
               </div>

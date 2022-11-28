@@ -51,19 +51,38 @@ function Post({ token, posts, setPosts }) {
   function handleModify(e) {
     e.preventDefault();
 
-    var formData = new FormData();
-    formData.append("title", e.target.title.value);
-    formData.append("body", e.target.body.value);
-    formData.append("image", e.target.image.files[0]);
+    var formDataModify = new FormData();
+
+    const body = {
+      title: e.target.title.value,
+      body: e.target.body.value,
+      image: e.target.image.files[0],
+    };
+    console.log(body);
+
+    formDataModify.append("title", body.title);
+    formDataModify.append("body", body.body);
+    formDataModify.append("image", body.image);
+    
+    
+
+    // formData.append("image", e.target.image.files[0]);
 
     axios
-      .put(`http://localhost:8000/api/post/${e.target.id.value}`, formData, {
+      .put(`http://localhost:8000/api/post/${e.target.id.value}`, formDataModify, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`
         },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.config.data);
+        var formdata = res.config.data;
+
+        //list formadata
+        for (var value of formdata.values()) {
+          console.log(value);
+        }
         setPosts(
           posts.map((post) => (post.id === res.data.id ? res.data : post))
         );
