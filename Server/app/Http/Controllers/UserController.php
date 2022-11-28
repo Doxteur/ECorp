@@ -42,8 +42,7 @@ class UserController extends Controller
             } else {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Mauvais mot de passe',
-                    
+                    'message' => 'Mauvais mot de passe',  
                 ]);
             }
         } else {
@@ -55,15 +54,32 @@ class UserController extends Controller
     }
     public function register(Request $request)
     {
+        //Conditions mdp et name
+       
         //Gestion cas erreur si l'utilisateur existe déjà
-        $userCheck = User::where('name',$request->name)->first();
-        if($userCheck){
+        $check = User::where('name',$request->name)->first();
+
+        
+        if($check){
             return response()->json([
                 'status' => 'error',
                 'message' => 'Nom d\'utilisateur déjà utilisé'
             ]);
-        }           
+        }
+        $request->validate([
+            'name' => [
+                'required',
+                'string',
+            ],
+            'password' => [
+                'required',
+                'string',
+                'min:6',
+                'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%*]).*$/',
+            ]
+            ]);
 
+        
         //Création de l'utilisateur
         $user = new User();
         $user->name = $request->name;
@@ -76,4 +92,3 @@ class UserController extends Controller
         ]);
     }
 }
-

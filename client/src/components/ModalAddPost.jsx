@@ -1,6 +1,6 @@
-  import React from "react";
+import React from "react";
 
-function ModalAddPost({ addPost }) {
+function ModalAddPost({ addPost, error }) {
 
   const [image, setImage] = React.useState(null);
 
@@ -70,6 +70,8 @@ function ModalAddPost({ addPost }) {
                 <button className="btn btn-success" type="submit">
                   Ajouter
                 </button>
+                <h1 className="text-red-500 text-base">{error}</h1>
+                
               </div>
             </form>
           </div>

@@ -15,17 +15,25 @@ class PostController extends Controller
     
     public function index()
     {
-        $posts =Post::orderBy('created_at', 'desc')->get();
+        $posts = Post::orderBy('created_at', 'desc')->get();
        
-        return response()->json($posts);
+        return json_encode($posts);
     }
+
+    //get by id
+    public function show($id)
+    {
+        $post = Post::find($id);
+        return json_encode($post);
+    }
+
     public function store(Request $request)
     {
         //Validate request
         $request->validate([
             'title' => 'required',
             'body' => 'required',
-            'image' => 'mimes:jpeg,jpg,png|required|max:10000' 
+            'image' => 'mimes:jpeg,jpg,png|required|max:100000' 
         ]);
 
         //store image
@@ -46,6 +54,50 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         $post->delete();
+        //delete image
+        $image_path = public_path('images/' . $post->image);
+
+        //delete image from folder
+        @unlink($image_path);
+
+        return $post;
+    }
+
+    //modify
+
+    public function update(Request $request, $id)
+    {
+
+        return json_encode($request->all());
+        //Validate request
+        $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+            'image' => 'mimes:jpeg,jpg,png|required|max:100000' 
+        ]);
+
+        // get post with id
+        $post = Post::find($id);
+        $image_name = $post->image;
+
+        //delete from folder image if new image is uploaded
+        if ($request->hasFile('image')) {
+            $image_path = public_path('images/' . $post->image);
+            @unlink($image_path);
+        }
+
+        //store image
+        $image = $request->file('image');
+        
+
+        // A modifier
+        $image_name = time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('images'), $image_name);
+        
+        $post->title = $request->title;
+        $post->body = $request->body;
+
+        $post->save();
         return $post;
     }
     

@@ -16,12 +16,17 @@ function Register({ token, setToken }) {
 
     //Try to login with the provided credentials
     axios.post("http://127.0.0.1:8000/api/register", body).then((res) => {
-      if (res.data.status === "success") {
-        setStatus("success");
-      } else {
-        setStatus(res.data.message);
-      }
-    });
+      if(res.data.status === "success"){
+          setStatus("success");
+
+        }else{
+          setStatus(res.data.message)
+        }
+    }
+).catch((err) => {
+      console.log(err)
+      setStatus(err.response.data.message)
+    })
   };
 
   if (status === "success") {

@@ -20,29 +20,35 @@ use App\Http\Controllers\PostController;
 // a delete
 //Route::middleware('auth:api')->get('/user', [UserController::class, 'index']);
 
-Route::get('/user/{id}', [UserController::class, 'show']);
 
+// Authentification
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
+Route::put('/post/{id}', [PostController::class, 'update']);
 
-//Test à enlever pour le main
-if(env('APP_ENV') === "local"){
+Route::group(['middleware' => ['auth:api']], function () {
 
-    Route::middleware('auth:api')->get('/test', function(){
+    // Get all posts and by id
+    Route::get('/post', [PostController::class, 'index']);
+    Route::get('/post/{id}', [PostController::class, 'show']);
+
+    // Add post
+    Route::post('/post', [PostController::class, 'store']);
+
+    //Delete post
+    Route::delete('/post/{id}', [PostController::class, 'destroy']);
+
+    // Modify Post
+
+    // Inutile pour le moment
+    Route::get('/user/{id}', [UserController::class, 'show']);
+    Route::get('/user', [UserController::class, 'index']);
+    
+});
+
+//Test à enlever pour la prod
+if (env('APP_ENV') === "local") {
+    Route::middleware('auth:api')->get('/test', function () {
         return "hello world";
     });
 }
-
-
-//Post
-Route::middleware('auth:api')->get('/post', [PostController::class, 'index']);
-Route::middleware('auth:api')->post('/post', [PostController::class, 'store']);
-Route::middleware('auth:api')->delete('/post/{id}', [PostController::class, 'destroy']);
-
-Route::group(['middleware' => ['auth:api']], function() {
-    
-    Route::get('/user', [UserController::class, 'index']);
-  });
-
-
-
