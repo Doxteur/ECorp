@@ -40,7 +40,9 @@ function LoginForm({ setToken }) {
     .then((res) => {
       if (res.data.api_token) {
         setToken(res.data.api_token);
+        console.log(res.data)
         localStorage.setItem("token", res.data.api_token);
+        localStorage.setItem("user_id", res.data.id);
       } else {
         setError(res.data.message);
       }})

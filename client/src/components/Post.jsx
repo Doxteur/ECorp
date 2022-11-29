@@ -9,31 +9,33 @@ import ModalEditPost from "./ModalEditPost";
 function Post({ token, posts, setPosts }) {
   const [modalPost, setModalPost] = React.useState(null);
   const [error, setError] = React.useState(null);
+  const [postLiked, setPostLiked] = React.useState(null);
 
-  function handleErrors(err) {
-    console.log(err);
-    switch (err.response.status) {
-      case 401:
-        setError("You are not authorized to do this action");
-        break;
-      case 403:
-        setError("You are not authorized to do this action");
-        break;
-      case 404:
-        setError("This post does not exist");
-        break;
-      case 500:
-        setError("Le serveur a rencontré une erreur");
-        break;
-      default:
-        setError("Format supportés jpg,png et taille max 100Mo");
-    }
-  }
+  const idUser = localStorage.getItem("user_id");
 
-  // Show Modal with the post to edit
+  // On fetch les posts
+  useEffect(() => {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    axios
+      .get("http://www.localhost:8000/api/post", { headers: headers })
+      .then((res) => {
+        setPosts(res.data);
+        setPostLiked(res.data.likes);
+      })
+      .catch((err) => {
+        handleErrors(err);
+      });
+  }, [token]);
+
+  useEffect(() => {
+    console.log(posts);
+  }, [posts]);
+
+  // Affiche le modal avec les infos du post à modifier
   function modifyPost(e) {
     e.preventDefault();
-    console.log(e.target.id);
     axios
       .get(`http://localhost:8000/api/post/${e.target.id}`, {
         headers: {
@@ -41,48 +43,46 @@ function Post({ token, posts, setPosts }) {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setModalPost(res.data);
       })
       .catch(handleErrors);
   }
 
-  // Modify the post when the user change the input
+  // Apres validation du formulaire de modification
   function handleModify(e) {
     e.preventDefault();
 
     var formDataModify = new FormData();
 
     const body = {
+      id: e.target.id.value,
       title: e.target.title.value,
       body: e.target.body.value,
       image: e.target.image.files[0],
     };
-    console.log(body);
 
+    formDataModify.append("id", body.id);
     formDataModify.append("title", body.title);
     formDataModify.append("body", body.body);
-    formDataModify.append("image", body.image);
-    
-    
+    if (body.image) {
+      formDataModify.append("image", body.image);
+    }
 
-    // formData.append("image", e.target.image.files[0]);
-
+    // utilisation de post car laravel ne supporte pas put avec un formData
     axios
-      .put(`http://localhost:8000/api/post/${e.target.id.value}`, formDataModify, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`
-        },
-      })
-      .then((res) => {
-        console.log(res.config.data);
-        var formdata = res.config.data;
-
-        //list formadata
-        for (var value of formdata.values()) {
-          console.log(value);
+      .post(
+        `http://localhost:8000/api/post/modify/${body.id}`,
+        formDataModify,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
         }
+      )
+      .then((res) => {
+        console.log(res);
         setPosts(
           posts.map((post) => (post.id === res.data.id ? res.data : post))
         );
@@ -91,23 +91,7 @@ function Post({ token, posts, setPosts }) {
       .catch(handleErrors);
   }
 
-  // On loading Get Posts
-  useEffect(() => {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-
-    axios
-      .get("http://www.localhost:8000/api/post", { headers: headers })
-      .then((res) => {
-        setPosts(res.data);
-      })
-      .catch((err) => {
-        handleErrors(err);
-      });
-  }, [token, setPosts]);
-
-  //remove post
+  //Supprimer un post
   const removePost = (id, e) => {
     //disable button
     e.target.disabled = true;
@@ -131,7 +115,7 @@ function Post({ token, posts, setPosts }) {
       });
   };
 
-  //Add post
+  //Ajout d'un post
   const addPost = (e) => {
     e.preventDefault();
 
@@ -172,6 +156,28 @@ function Post({ token, posts, setPosts }) {
       });
   };
 
+  // Gestions des erreurs
+  function handleErrors(err) {
+    console.log(err);
+    switch (err.response.status) {
+      case 401:
+        setError("You are not authorized to do this action");
+        break;
+      case 403:
+        setError("You are not authorized to do this action");
+        break;
+      case 404:
+        setError("This post does not exist");
+        break;
+      case 500:
+        setError("Le serveur a rencontré une erreur");
+        break;
+      default:
+        setError("Format supportés jpg,png et taille max 100Mo");
+    }
+  }
+
+  // Renvoie la liste des posts dans une div
   const postsList = posts.map((post) => {
     return (
       <div className="p-4" key={post.id}>
@@ -179,12 +185,15 @@ function Post({ token, posts, setPosts }) {
           post={post}
           removePost={removePost}
           modifyPost={modifyPost}
-          id={post.id}
+          likes={post.likes}
+          user_id={localStorage.getItem("user_id")}
+          token={token}
         />
       </div>
     );
   });
 
+  // Affiche une modal avec le post à modifier
   const modalEdit = modalPost ? (
     <ModalEditPost
       token={token}
@@ -197,11 +206,15 @@ function Post({ token, posts, setPosts }) {
   return (
     <>
       <NavBar />
+
       <label htmlFor="my-modal-4" className="btn btn-success mt-4">
         Ajouter un post
       </label>
+
       {modalEdit}
+
       <ModalAddPost token={token} addPost={addPost} error={error} />
+
       <div className="grid grid-cols-1 gap-2 m-auto md:w-1/3 ">{postsList}</div>
     </>
   );
