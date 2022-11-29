@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\LikesController;
 
 
 /*
@@ -24,26 +25,33 @@ use App\Http\Controllers\PostController;
 // Authentification
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
-Route::put('/post/{id}', [PostController::class, 'update']);
 
 Route::group(['middleware' => ['auth:api']], function () {
-
+    
     // Get all posts and by id
     Route::get('/post', [PostController::class, 'index']);
     Route::get('/post/{id}', [PostController::class, 'show']);
-
+    
     // Add post
     Route::post('/post', [PostController::class, 'store']);
-
+    
+    //Modify post
+    Route::post('/post/modify/{id}', [PostController::class, 'update']);
+    
     //Delete post
     Route::delete('/post/{id}', [PostController::class, 'destroy']);
-
-    // Modify Post
 
     // Inutile pour le moment
     Route::get('/user/{id}', [UserController::class, 'show']);
     Route::get('/user', [UserController::class, 'index']);
     
+
+    // Like routes
+    Route::post('/like', [LikesController::class, 'likePost']);
+    Route::post('/unlike', [LikesController::class, 'unlikePost']);
+    Route::get('/likes/{iduser}', [LikesController::class, 'getLikes']);
+    
+
 });
 
 //Test à enlever pour la prod
