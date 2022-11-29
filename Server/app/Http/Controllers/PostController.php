@@ -11,10 +11,10 @@ use Illuminate\Http\Response;
 
 class PostController extends Controller
 {
-    //
 
     public function index()
     {
+        // Get all posts inner join table likes
         $posts = Post::with('likes')->orderBy('created_at', 'desc')->get();
 
         return json_encode($posts);
@@ -85,7 +85,6 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        return $request->all();
         //Validate request
         $request->validate([
             'title' => 'required',

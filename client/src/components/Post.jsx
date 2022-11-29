@@ -5,6 +5,8 @@ import BasicCard from "./BasicCard";
 import ModalAddPost from "./ModalAddPost";
 import NavBar from "./NavBar";
 import ModalEditPost from "./ModalEditPost";
+import { AiFillCamera } from "react-icons/ai";
+import FormulaireAdd from "./FormulaireAdd";
 
 function Post({ token, posts, setPosts }) {
   const [modalPost, setModalPost] = React.useState(null);
@@ -120,7 +122,7 @@ function Post({ token, posts, setPosts }) {
     e.preventDefault();
 
     //disable button
-    e.target[3].disabled = true;
+    // e.target[3].disabled = true;
 
     const body = {
       title: e.target.title.value,
@@ -137,15 +139,19 @@ function Post({ token, posts, setPosts }) {
     formData.append("body", body.body);
     formData.append("image", body.image);
 
+    // print formdata
+
     axios
       .post("http://localhost:8000/api/post?api_token=" + token, formData, {
         headers: headers,
       })
       .then((res) => {
+        console.log(res);
         setPosts([res.data, ...posts]);
         //close modal
         document.getElementById("my-modal-4").checked = false;
         e.target[3].disabled = false;
+        console.log(res.data.image)
         setError(null);
       })
       .catch((err) => {
@@ -207,15 +213,18 @@ function Post({ token, posts, setPosts }) {
     <>
       <NavBar />
 
-      <label htmlFor="my-modal-4" className="btn btn-success mt-4">
+      {/* <label htmlFor="my-modal-4" className="btn btn-success mt-4">
         Ajouter un post
-      </label>
+      </label> */}
+      <FormulaireAdd token={token} addPost={addPost} />
 
       {modalEdit}
 
       <ModalAddPost token={token} addPost={addPost} error={error} />
 
-      <div className="grid grid-cols-1 gap-2 m-auto md:w-1/3 ">{postsList}</div>
+      <div className="grid grid-cols-1 gap-2 m-auto md:w-1/3 ">
+        {postsList}
+      </div>
     </>
   );
 }

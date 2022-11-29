@@ -1,7 +1,6 @@
 import React from "react";
 
 function ModalAddPost({ addPost, error }) {
-
   const [image, setImage] = React.useState(null);
 
   return (
@@ -61,17 +60,18 @@ function ModalAddPost({ addPost, error }) {
                   onChange={(e) => setImage(e.target.files[0])}
                   accept="image/jpg, image/jpeg"
                   required
-                  ></input>
-                <img src={image ? URL.createObjectURL(image) : ""} alt="" className="w-1/3"/>
-
-               
+                ></input>
+                <img
+                  src={image ? URL.createObjectURL(image) : ""}
+                  alt=""
+                  className="w-1/3"
+                />
               </div>
               <div className="flex items-center justify-between">
                 <button className="btn btn-success" type="submit">
                   Ajouter
                 </button>
                 <h1 className="text-red-500 text-base">{error}</h1>
-                
               </div>
             </form>
           </div>

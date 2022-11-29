@@ -22,10 +22,12 @@ export default function BasicCard({
   const imageLink = "http://127.0.0.1:8000/images/";
 
   useEffect(() => {
-    if (post.likes.find((like) => like.user_id === parseInt(user_id))) {
-      setisLike(true);
+    if (likes) {
+      if (likes.find((like) => like.user_id === parseInt(user_id))) {
+        setisLike(true);
+      }
+      setLikecount(likes.length);
     }
-    setLikecount(likes.length);
   }, [post]);
 
   const handleLike = (e) => {
