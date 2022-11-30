@@ -190,11 +190,8 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
   ) : null;
 
   // Infinite Scroll Method
-
   useEffect(() => {
-
     setTimeout(() => {
-     
       axios
         .get(`http://localhost:8000/api/post?page=${page}`, {
           headers: {
@@ -205,7 +202,11 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
           setPosts(posts.concat(res.data.data));
           setHasMore(res.data.current_page < res.data.last_page);
         }).catch((err) => {
-          console.log(err);
+          // logout
+          localStorage.removeItem("token");
+          localStorage.removeItem("user_id");
+          // redirect
+          window.location.href = "/login";
         });
     }, 700);
   }, [page]);
@@ -241,7 +242,6 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
               &#8595; Tirer pour rafraichir
             </h3>
           }
-
           // below props only if you need pull down functionality
         >
           {postsList}

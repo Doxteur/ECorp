@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { AiFillLike } from "react-icons/ai";
 
 function Likes({ post, token, user_id, postLikes,isLike, setisLike ,likecount, setLikecount,handleLike}) {
@@ -10,7 +10,7 @@ function Likes({ post, token, user_id, postLikes,isLike, setisLike ,likecount, s
       }
       setLikecount(postLikes.length);
     }
-  }, [post, postLikes, user_id]);
+  }, [post, postLikes, user_id, setisLike, setLikecount]);
 
  
 

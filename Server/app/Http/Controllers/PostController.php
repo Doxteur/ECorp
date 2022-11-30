@@ -32,7 +32,7 @@ class PostController extends Controller
         $post = Post::find($id);
         // find user with token sent
         $user = auth()->user();
-
+        
         // check if user is owner of post
         if ($user->id == $post->user_id) {
             $post->likes()->delete();
