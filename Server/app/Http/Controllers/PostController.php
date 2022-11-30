@@ -15,9 +15,8 @@ class PostController extends Controller
     public function index()
     {
         // Get all posts inner join table likes
-        $posts = Post::with('likes')->orderBy('created_at', 'desc')->get();
-
-        return json_encode($posts);
+        $posts = Post::with('likes')->orderBy('id', 'desc')->paginate(5);
+        return response()->json($posts);
     }
 
     //get by id
@@ -71,6 +70,12 @@ class PostController extends Controller
 
         // get post with id
         $post = Post::find($id);
+        // is authenticated user owner of post
+        $user = auth()->user();
+        if ($user->id != $post->user_id) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
         $image_name = $post->image;
 
         //delete from folder image if new image is uploaded
@@ -118,4 +123,14 @@ class PostController extends Controller
         $post->save();
         return $post;
     }
+
+
+
+    // test pagination
+    public function paginationTest()
+    {
+        $posts = Post::paginate(5);
+        return json_encode($posts);
+    }
+
 }

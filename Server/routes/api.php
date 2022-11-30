@@ -26,6 +26,8 @@ use App\Http\Controllers\LikesController;
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
 
+// test pagination on post
+
 Route::group(['middleware' => ['auth:api']], function () {
     
     // Get all posts and by id

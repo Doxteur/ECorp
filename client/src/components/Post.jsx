@@ -6,25 +6,14 @@ import ModalAddPost from "./ModalAddPost";
 import NavBar from "./NavBar";
 import ModalEditPost from "./ModalEditPost";
 import FormulaireAdd from "./FormulaireAdd";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-function Post({ token, posts, setPosts,customError, setCustomError }) {
+function Post({ token, posts, setPosts, customError, setCustomError }) {
   const [modalPost, setModalPost] = React.useState(null);
 
-  // On fetch les posts
-  useEffect(() => {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-    axios
-      .get("http://www.localhost:8000/api/post", { headers: headers })
-      .then((res) => {
-        setPosts(res.data);
-      })
-      .catch((err) => {
-        handleErrors(err);
-      });
-  }, [token, setPosts]);
-
+  // Infinite scroll
+  const [page, setPage] = React.useState(1);
+  const [hasMore, setHasMore] = React.useState(true);
 
 
   // Affiche le modal avec les infos du post à modifier
@@ -100,7 +89,6 @@ function Post({ token, posts, setPosts,customError, setCustomError }) {
         headers: headers,
       })
       .then((res) => {
-        console.log(res);
         setPosts(posts.filter((post) => post.id !== id));
       })
       .catch((err) => {
@@ -139,7 +127,6 @@ function Post({ token, posts, setPosts,customError, setCustomError }) {
         headers: headers,
       })
       .then((res) => {
-        console.log(res);
 
         setPosts([res.data, ...posts]);
         //close modal
@@ -202,10 +189,34 @@ function Post({ token, posts, setPosts,customError, setCustomError }) {
     />
   ) : null;
 
+  // Infinite Scroll Method
+
+  useEffect(() => {
+
+    setTimeout(() => {
+     
+      axios
+        .get(`http://localhost:8000/api/post?page=${page}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setPosts(posts.concat(res.data.data));
+          setHasMore(res.data.current_page < res.data.last_page);
+        }).catch((err) => {
+          console.log(err);
+        });
+    }, 700);
+  }, [page]);
+
+  const fetchMoreData = () => {
+    setPage(page + 1);
+  };
   return (
     <>
       <NavBar />
-      
+
       <FormulaireAdd token={token} addPost={addPost} />
 
       {modalEdit}
@@ -213,7 +224,28 @@ function Post({ token, posts, setPosts,customError, setCustomError }) {
       <ModalAddPost token={token} addPost={addPost} customError={customError} />
 
       <div className="mt-56">
-        {postsList}
+        <InfiniteScroll
+          dataLength={posts.length} //This is important field to render the next data
+          next={fetchMoreData}
+          hasMore={hasMore}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>Plus de post disponibles</b>
+            </p>
+          }
+          refreshFunction={fetchMoreData}
+          pullDownToRefresh
+          pullDownToRefreshContent={
+            <h3 style={{ textAlign: "center" }}>
+              &#8595; Tirer pour rafraichir
+            </h3>
+          }
+
+          // below props only if you need pull down functionality
+        >
+          {postsList}
+        </InfiniteScroll>
       </div>
     </>
   );

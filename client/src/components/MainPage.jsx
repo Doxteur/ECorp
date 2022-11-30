@@ -11,7 +11,7 @@ function MainPage() {
         <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
           <h1 className="text-6xl font-bold">
             <span className="text-blue-600">Welcome</span> to
-            <p className="text-white">
+            <span className="text-white">
               <TypeAnimation
                 sequence={[
                   "",
@@ -43,7 +43,7 @@ function MainPage() {
                 cursor={true}
                 repeat={false}
               />
-            </p>
+            </span>
           </h1>
 
           <div className="flex align-baseline items-baseline">
@@ -56,8 +56,6 @@ function MainPage() {
           </div>
         </main>
       </div>
-
-      {/*  add animation: blink .75s step-end infinite; */}
     </>
   );
 }
