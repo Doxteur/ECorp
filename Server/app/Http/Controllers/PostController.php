@@ -31,15 +31,26 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
-        $post->likes()->delete();
-        $post->delete();
-        //delete image
-        $image_path = public_path('images/' . $post->image);
+        // find user with token sent
+        $user = auth()->user();
 
-        //delete image from folder
-        @unlink($image_path);
+        // check if user is owner of post
+        if ($user->id == $post->user_id) {
+            $post->likes()->delete();
+            $post->delete();
 
-        return $post;
+            $post->delete();
+            //delete image
+            $image_path = public_path('images/' . $post->image);
+
+            //delete image from folder
+            @unlink($image_path);
+
+            return response()->json(['message' => 'Post deleted successfully']);
+        } else {
+            // return 401 if user is not owner of post
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
     }
 
     //modify
