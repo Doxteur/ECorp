@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 function ModalEditPost({ token, setPost, modalPost, handleModify }) {
 
   useEffect(() => {
-    console.log("modalPost", modalPost);
     if (modalPost) {
       const modal = document.getElementById("my-modal-3");
       modal.checked = true;
@@ -18,6 +17,7 @@ function ModalEditPost({ token, setPost, modalPost, handleModify }) {
         <label className="modal-box relative" htmlFor="">
           <div>
             <form onSubmit={(e) => handleModify(e)}>
+
               <input
                 type="hidden"
                 name="id"
@@ -67,7 +67,6 @@ function ModalEditPost({ token, setPost, modalPost, handleModify }) {
                   id="image"
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
                   accept="image/jpg, image/jpeg"
-                  required
                   ></input>
                
               </div>

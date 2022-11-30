@@ -37,7 +37,8 @@ class UserController extends Controller
                 $user->save();
                 return response()->json([
                     'status' => 'success',
-                    'api_token' => $user->api_token
+                    'api_token' => $user->api_token,
+                    'id' => $user->id
                 ]);
             } else {
                 return response()->json([

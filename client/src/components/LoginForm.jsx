@@ -41,6 +41,7 @@ function LoginForm({ setToken }) {
       if (res.data.api_token) {
         setToken(res.data.api_token);
         localStorage.setItem("token", res.data.api_token);
+        localStorage.setItem("user_id", res.data.id);
       } else {
         setError(res.data.message);
       }})
