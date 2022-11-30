@@ -6,26 +6,14 @@ import ModalAddPost from "./ModalAddPost";
 import NavBar from "./NavBar";
 import ModalEditPost from "./ModalEditPost";
 import FormulaireAdd from "./FormulaireAdd";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-function Post({ token, posts, setPosts }) {
+function Post({ token, posts, setPosts, customError, setCustomError }) {
   const [modalPost, setModalPost] = React.useState(null);
-  const [error, setError] = React.useState(null);
 
-  // On fetch les posts
-  useEffect(() => {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-    axios
-      .get("http://www.localhost:8000/api/post", { headers: headers })
-      .then((res) => {
-        setPosts(res.data);
-      })
-      .catch((err) => {
-        handleErrors(err);
-      });
-  }, [token, setPosts]);
-
+  // Infinite scroll
+  const [page, setPage] = React.useState(1);
+  const [hasMore, setHasMore] = React.useState(true);
 
 
   // Affiche le modal avec les infos du post à modifier
@@ -105,6 +93,8 @@ function Post({ token, posts, setPosts }) {
       })
       .catch((err) => {
         handleErrors(err);
+        e.target.disabled = false;
+        e.target.innerHTML = "Supprimer";
       });
   };
 
@@ -137,13 +127,15 @@ function Post({ token, posts, setPosts }) {
         headers: headers,
       })
       .then((res) => {
+
         setPosts([res.data, ...posts]);
         //close modal
         document.getElementById("my-modal-4").checked = false;
         e.target[3].disabled = false;
-        setError(null);
       })
       .catch((err) => {
+        console.log(err);
+
         e.target[3].disabled = false;
         // set to red with text Ressayer
         e.target[3].innerHTML = "Ressayer";
@@ -153,22 +145,21 @@ function Post({ token, posts, setPosts }) {
 
   // Gestions des erreurs
   function handleErrors(err) {
-    console.log(err);
     switch (err.response.status) {
       case 401:
-        setError("You are not authorized to do this action");
+        setCustomError("Vous n'êtes pas autorisé.");
         break;
       case 403:
-        setError("You are not authorized to do this action");
+        setCustomError("Vous n'êtes pas autorisé.");
         break;
       case 404:
-        setError("This post does not exist");
+        setCustomError("Ce poste n'éxiste pas.");
         break;
       case 500:
-        setError("Le serveur a rencontré une erreur");
+        setCustomError("Le serveur a rencontré une erreur");
         break;
       default:
-        setError("Format supportés jpg,png et taille max 100Mo");
+        setCustomError("Format supportés jpg,png et taille max 100Mo");
     }
   }
 
@@ -198,18 +189,63 @@ function Post({ token, posts, setPosts }) {
     />
   ) : null;
 
+  // Infinite Scroll Method
+  useEffect(() => {
+    setTimeout(() => {
+      axios
+        .get(`http://localhost:8000/api/post?page=${page}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setPosts(posts.concat(res.data.data));
+          setHasMore(res.data.current_page < res.data.last_page);
+        }).catch((err) => {
+          // logout
+          localStorage.removeItem("token");
+          localStorage.removeItem("user_id");
+          // redirect
+          window.location.href = "/login";
+        });
+    }, 700);
+  }, [page]);
+
+  const fetchMoreData = () => {
+    setPage(page + 1);
+  };
   return (
     <>
       <NavBar />
-      
+
       <FormulaireAdd token={token} addPost={addPost} />
 
       {modalEdit}
 
-      <ModalAddPost token={token} addPost={addPost} error={error} />
+      <ModalAddPost token={token} addPost={addPost} customError={customError} />
 
       <div className="mt-56">
-        {postsList}
+        <InfiniteScroll
+          dataLength={posts.length} //This is important field to render the next data
+          next={fetchMoreData}
+          hasMore={hasMore}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>Plus de post disponibles</b>
+            </p>
+          }
+          refreshFunction={fetchMoreData}
+          pullDownToRefresh
+          pullDownToRefreshContent={
+            <h3 style={{ textAlign: "center" }}>
+              &#8595; Tirer pour rafraichir
+            </h3>
+          }
+          // below props only if you need pull down functionality
+        >
+          {postsList}
+        </InfiniteScroll>
       </div>
     </>
   );

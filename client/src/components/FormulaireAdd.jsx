@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState} from "react";
 import { AiFillCamera } from "react-icons/ai";
 
 function FormulaireAdd({ token, addPost }) {
-  const [formOpen, setFormOpen] = React.useState(false);
-  const [formOpenText, setFormOpenText] = React.useState("Ajouter un post");
+  const [formOpen, setFormOpen] = useState(false);
+  const [formOpenText, setFormOpenText] = useState("Ajouter un post");
 
   useEffect(() => {
     // open form
@@ -34,7 +34,7 @@ function FormulaireAdd({ token, addPost }) {
     >
       <div tabIndex={0} className="collapse">
         <input type="checkbox"  id="formOpenCheckbox" onChange={(e)=>handleFormOpen(e)}/>
-        <div className="collapse-title pr-6 text-xl font-medium">
+        <div className="collapse-title pr-5 text-xl font-medium">
           <div
             className="btn btn-success btn-sm"
             id="formButton"
@@ -79,52 +79,14 @@ function FormulaireAdd({ token, addPost }) {
 
                 {/*  button that click on addImageInput */}
               </div>
-              <button className="btn btn-success btn-sm mt-2" type="submit">
+              <button className="btn btn-success btn-sm mt-2" type="submit" onClick={(e) => handleFormOpen()}>
                 Ecrire
               </button>
             </form>
-          </div>{" "}
+          </div>
         </div>
       </div>
     </div>
-    // <div className="bg-base fixed top-16 left-1/2 -translate-x-1/2 z-20 w-full p-4 border-b-2 border-transparent shadow-lg" style={{backgroundColor:"#181818"}}>
-    //   <div className="p-4 bg-white w-full sm:w-full md:w-96 rounded-lg m-auto">
-    //     <form onSubmit={(e) => addPost(e)} className="form-control" >
-    //       <input
-    //         type="file"
-    //         id="addImageInput"
-    //         className="hidden"
-    //         placeholder="Ajouter une image"
-    //         name="image"
-    //       />
-    //       <input name="title" type="text" className="border-b-2 outline-none bg-white text-black w-full" placeholder="Mon Titre"/>
-    //       <div className="flex mt-4">
-    //         <input
-    //           name="content"
-    //           type="text"
-    //           className="border-b-2 outline-none bg-white text-black w-full"
-    //           placeholder="Quelque chose à dire...."
-    //         />
-
-    //         {/* AJouter une image */}
-    //         <button
-    //           type="button"
-    //           className="btn btn-warning btn-sm mx-2"
-    //           onClick={() => {
-    //             document.getElementById("addImageInput").click();
-    //           }}
-    //         >
-    //           <AiFillCamera className="scale-150" />
-    //         </button>
-
-    //         {/*  button that click on addImageInput */}
-    //       </div>
-    //       <button className="btn btn-success btn-sm mt-2" type="submit">
-    //         Ecrire
-    //       </button>
-    //     </form>
-    //   </div>
-    // </div>
   );
 }
 

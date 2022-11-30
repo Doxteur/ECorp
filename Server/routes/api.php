@@ -26,6 +26,7 @@ use App\Http\Controllers\LikesController;
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
 
+// test pagination on post
 Route::group(['middleware' => ['auth:api']], function () {
     
     // Get all posts and by id
@@ -45,12 +46,10 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/user/{id}', [UserController::class, 'show']);
     Route::get('/user', [UserController::class, 'index']);
     
-
     // Like routes
     Route::post('/like', [LikesController::class, 'likePost']);
     Route::post('/unlike', [LikesController::class, 'unlikePost']);
     Route::get('/likes/{iduser}', [LikesController::class, 'getLikes']);
-    
 
 });
 

@@ -15,9 +15,8 @@ class PostController extends Controller
     public function index()
     {
         // Get all posts inner join table likes
-        $posts = Post::with('likes')->orderBy('created_at', 'desc')->get();
-
-        return json_encode($posts);
+        $posts = Post::with('likes')->orderBy('id', 'desc')->paginate(5);
+        return response()->json($posts);
     }
 
     //get by id
@@ -31,15 +30,26 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
-        $post->likes()->delete();
-        $post->delete();
-        //delete image
-        $image_path = public_path('images/' . $post->image);
+        // find user with token sent
+        $user = auth()->user();
+        
+        // check if user is owner of post
+        if ($user->id == $post->user_id) {
+            $post->likes()->delete();
+            $post->delete();
 
-        //delete image from folder
-        @unlink($image_path);
+            $post->delete();
+            //delete image
+            $image_path = public_path('images/' . $post->image);
 
-        return $post;
+            //delete image from folder
+            @unlink($image_path);
+
+            return response()->json(['message' => 'Post deleted successfully']);
+        } else {
+            // return 401 if user is not owner of post
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
     }
 
     //modify
@@ -60,6 +70,12 @@ class PostController extends Controller
 
         // get post with id
         $post = Post::find($id);
+        // is authenticated user owner of post
+        $user = auth()->user();
+        if ($user->id != $post->user_id) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
         $image_name = $post->image;
 
         //delete from folder image if new image is uploaded
@@ -107,4 +123,14 @@ class PostController extends Controller
         $post->save();
         return $post;
     }
+
+
+
+    // test pagination
+    public function paginationTest()
+    {
+        $posts = Post::paginate(5);
+        return json_encode($posts);
+    }
+
 }

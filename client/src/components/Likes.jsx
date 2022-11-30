@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { AiFillLike } from "react-icons/ai";
-import axios from "axios";
 
-function Likes({ post, token, user_id, postLikes }) {
-  const [isLike, setisLike] = useState(false);
-  const [likecount, setLikecount] = useState(0);
+function Likes({ post, token, user_id, postLikes,isLike, setisLike ,likecount, setLikecount,handleLike}) {
 
   useEffect(() => {
     if (postLikes) {
@@ -13,43 +10,9 @@ function Likes({ post, token, user_id, postLikes }) {
       }
       setLikecount(postLikes.length);
     }
-  }, [post, postLikes, user_id]);
+  }, [post, postLikes, user_id, setisLike, setLikecount]);
 
-  const handleLike = (e) => {
-    e.preventDefault();
-
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-
-    const body = {
-      post_id: post.id,
-    };
-
-    if (isLike) {
-      setisLike(false);
-      setLikecount(likecount - 1);
-    } else {
-      setisLike(true);
-      setLikecount(likecount + 1);
-    }
-
-    axios
-      .post(`http://localhost:8000/api/like`, body, {
-        headers: headers,
-      })
-      .then((res) => {})
-      .catch((err) => {
-        console.log(err);
-        if (isLike) {
-          setisLike(false);
-          setLikecount(likecount - 1);
-        } else {
-          setisLike(true);
-          setLikecount(likecount + 1);
-        }
-      });
-  };
+ 
 
   const likedPost = () => {
     if (isLike) {

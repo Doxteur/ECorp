@@ -1,6 +1,9 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { BsFillGearFill } from "react-icons/bs";
 import Likes from "./Likes";
+import axios from "axios";
+import { useDoubleTap } from 'use-double-tap';
+import ConfettiExplosion from 'react-confetti-explosion';
 
 export default function BasicCard({
   post,
@@ -8,15 +11,68 @@ export default function BasicCard({
   modifyPost,
   token,
   user_id,
-  likes
+  likes,
 }) {
-
+  const [isLike, setisLike] = useState(false);
+  const [likecount, setLikecount] = useState(0);
+  const [isExploding, setIsExploding] = useState(false);
 
   const imageLink = "http://127.0.0.1:8000/images/";
 
 
+  const handleLike = (e) => {
+    e.preventDefault();
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const body = {
+      post_id: post.id,
+    };
+
+    if (isLike) {
+      setisLike(false);
+      setLikecount(likecount - 1);
+    } else {
+      setisLike(true);
+      setLikecount(likecount + 1);
+    }
+
+    axios
+      .post(`http://localhost:8000/api/like`, body, {
+        headers: headers,
+      })
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+        if (isLike) {
+          setisLike(false);
+          setLikecount(likecount - 1);
+        } else {
+          setisLike(true);
+          setLikecount(likecount + 1);
+        }
+      });
+  };
+
+  // Joué lors du double tap
+  const bind = useDoubleTap((event) => {
+    handleLike(event);
+    setIsExploding(true);
+
+    setTimeout(() => {
+      setIsExploding(false);
+    }
+    , 1000);
+
+  });
+
+
   return (
     <div className="card m-auto md:w-96 bg-base-100 shadow-xl">
+    {isExploding && <ConfettiExplosion />}
+
       {/* DropDown */}
       <div className="dropdown dropdown-end absolute right-0">
         <label tabIndex={0} className="btn m-1">
@@ -45,7 +101,8 @@ export default function BasicCard({
       </div>
 
       {/* BackGround Image */}
-      <figure>
+      <figure {...bind}>
+
         {post.image ? (
           <img
             src={imageLink + post.image}
@@ -68,7 +125,17 @@ export default function BasicCard({
         <div className="card-actions justify-end">
           <div className="flex mx-2">
             {/*  Like part */}
-              <Likes post={post} token={token} user_id={user_id} postLikes={likes} />
+            <Likes
+              post={post}
+              token={token}
+              user_id={user_id}
+              postLikes={likes}
+              isLike={isLike}
+              likecount={likecount}
+              setisLike={setisLike}
+              setLikecount={setLikecount}
+              handleLike={handleLike}
+            />
           </div>
         </div>
       </div>
