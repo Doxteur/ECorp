@@ -14,6 +14,7 @@ module.exports = {
         ECorp: {
           primary: "#0F0F0F",
           secondary: "#2563eb",
+          custom: "#181818",
           background: "#181818",
           accent: "#37cdbe",
           neutral: "#3d4451",

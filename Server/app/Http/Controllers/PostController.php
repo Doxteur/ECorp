@@ -31,6 +31,7 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+        $post->likes()->delete();
         $post->delete();
         //delete image
         $image_path = public_path('images/' . $post->image);

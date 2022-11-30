@@ -5,15 +5,11 @@ import BasicCard from "./BasicCard";
 import ModalAddPost from "./ModalAddPost";
 import NavBar from "./NavBar";
 import ModalEditPost from "./ModalEditPost";
-import { AiFillCamera } from "react-icons/ai";
 import FormulaireAdd from "./FormulaireAdd";
 
 function Post({ token, posts, setPosts }) {
   const [modalPost, setModalPost] = React.useState(null);
   const [error, setError] = React.useState(null);
-  const [postLiked, setPostLiked] = React.useState(null);
-
-  const idUser = localStorage.getItem("user_id");
 
   // On fetch les posts
   useEffect(() => {
@@ -24,16 +20,13 @@ function Post({ token, posts, setPosts }) {
       .get("http://www.localhost:8000/api/post", { headers: headers })
       .then((res) => {
         setPosts(res.data);
-        setPostLiked(res.data.likes);
       })
       .catch((err) => {
         handleErrors(err);
       });
-  }, [token]);
+  }, [token, setPosts]);
 
-  useEffect(() => {
-    console.log(posts);
-  }, [posts]);
+
 
   // Affiche le modal avec les infos du post à modifier
   function modifyPost(e) {
@@ -45,7 +38,6 @@ function Post({ token, posts, setPosts }) {
         },
       })
       .then((res) => {
-        // console.log(res.data);
         setModalPost(res.data);
       })
       .catch(handleErrors);
@@ -84,7 +76,6 @@ function Post({ token, posts, setPosts }) {
         }
       )
       .then((res) => {
-        console.log(res);
         setPosts(
           posts.map((post) => (post.id === res.data.id ? res.data : post))
         );
@@ -146,12 +137,10 @@ function Post({ token, posts, setPosts }) {
         headers: headers,
       })
       .then((res) => {
-        console.log(res);
         setPosts([res.data, ...posts]);
         //close modal
         document.getElementById("my-modal-4").checked = false;
         e.target[3].disabled = false;
-        console.log(res.data.image)
         setError(null);
       })
       .catch((err) => {
@@ -212,17 +201,14 @@ function Post({ token, posts, setPosts }) {
   return (
     <>
       <NavBar />
-
-      {/* <label htmlFor="my-modal-4" className="btn btn-success mt-4">
-        Ajouter un post
-      </label> */}
+      
       <FormulaireAdd token={token} addPost={addPost} />
 
       {modalEdit}
 
       <ModalAddPost token={token} addPost={addPost} error={error} />
 
-      <div className="grid grid-cols-1 gap-2 m-auto md:w-1/3 ">
+      <div className="mt-56">
         {postsList}
       </div>
     </>

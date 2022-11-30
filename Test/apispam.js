@@ -18,7 +18,6 @@ function setDelay(i) {
         .get("http://127.0.0.1:8000/api/test", { headers: headers })
         .then((res) => {
             console.log(i)
-            // console.log(res)
                 })
                 .catch((err) => {
                     console.log(err)

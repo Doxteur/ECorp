@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 function ModalEditPost({ token, setPost, modalPost, handleModify }) {
 
   useEffect(() => {
-    console.log("modalPost", modalPost);
     if (modalPost) {
       const modal = document.getElementById("my-modal-3");
       modal.checked = true;
