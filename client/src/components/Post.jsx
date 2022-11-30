@@ -7,9 +7,8 @@ import NavBar from "./NavBar";
 import ModalEditPost from "./ModalEditPost";
 import FormulaireAdd from "./FormulaireAdd";
 
-function Post({ token, posts, setPosts }) {
+function Post({ token, posts, setPosts,customError, setCustomError }) {
   const [modalPost, setModalPost] = React.useState(null);
-  const [error, setError] = React.useState(null);
 
   // On fetch les posts
   useEffect(() => {
@@ -101,10 +100,13 @@ function Post({ token, posts, setPosts }) {
         headers: headers,
       })
       .then((res) => {
+        console.log(res);
         setPosts(posts.filter((post) => post.id !== id));
       })
       .catch((err) => {
         handleErrors(err);
+        e.target.disabled = false;
+        e.target.innerHTML = "Supprimer";
       });
   };
 
@@ -137,13 +139,16 @@ function Post({ token, posts, setPosts }) {
         headers: headers,
       })
       .then((res) => {
+        console.log(res);
+
         setPosts([res.data, ...posts]);
         //close modal
         document.getElementById("my-modal-4").checked = false;
         e.target[3].disabled = false;
-        setError(null);
       })
       .catch((err) => {
+        console.log(err);
+
         e.target[3].disabled = false;
         // set to red with text Ressayer
         e.target[3].innerHTML = "Ressayer";
@@ -153,22 +158,21 @@ function Post({ token, posts, setPosts }) {
 
   // Gestions des erreurs
   function handleErrors(err) {
-    console.log(err);
     switch (err.response.status) {
       case 401:
-        setError("You are not authorized to do this action");
+        setCustomError("Vous n'êtes pas autorisé.");
         break;
       case 403:
-        setError("You are not authorized to do this action");
+        setCustomError("Vous n'êtes pas autorisé.");
         break;
       case 404:
-        setError("This post does not exist");
+        setCustomError("Ce poste n'éxiste pas.");
         break;
       case 500:
-        setError("Le serveur a rencontré une erreur");
+        setCustomError("Le serveur a rencontré une erreur");
         break;
       default:
-        setError("Format supportés jpg,png et taille max 100Mo");
+        setCustomError("Format supportés jpg,png et taille max 100Mo");
     }
   }
 
@@ -206,7 +210,7 @@ function Post({ token, posts, setPosts }) {
 
       {modalEdit}
 
-      <ModalAddPost token={token} addPost={addPost} error={error} />
+      <ModalAddPost token={token} addPost={addPost} customError={customError} />
 
       <div className="mt-56">
         {postsList}

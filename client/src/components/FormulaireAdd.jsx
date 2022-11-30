@@ -34,7 +34,7 @@ function FormulaireAdd({ token, addPost }) {
     >
       <div tabIndex={0} className="collapse">
         <input type="checkbox"  id="formOpenCheckbox" onChange={(e)=>handleFormOpen(e)}/>
-        <div className="collapse-title pr-6 text-xl font-medium">
+        <div className="collapse-title pr-5 text-xl font-medium">
           <div
             className="btn btn-success btn-sm"
             id="formButton"

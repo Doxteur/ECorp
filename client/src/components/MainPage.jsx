@@ -10,7 +10,7 @@ function MainPage() {
       <div className="flex flex-col items-center justify-center min-h-screen py-2">
         <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
           <h1 className="text-6xl font-bold">
-            <span className="text-blue-600">Welcome</span> to{" "}
+            <span className="text-blue-600">Welcome</span> to
             <p className="text-white">
               <TypeAnimation
                 sequence={[
