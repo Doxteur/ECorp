@@ -19,6 +19,17 @@ export default function BasicCard({
 
   const imageLink = "http://phplaravel-887910-3078587.cloudwaysapps.com/images/";
 
+  // log is user owner of post
+  const isOwner = parseInt(user_id) === post.user_id;
+
+  if(isOwner){
+    // add blue border to owner post
+    var ownerStyle = {
+      border: "2px solid cyan",
+    };
+  }
+
+
   const handleLike = (e) => {
     e.preventDefault();
 
@@ -66,7 +77,9 @@ export default function BasicCard({
   });
 
   return (
-    <div className="card m-auto md:w-96 bg-base-100 shadow-xl">
+    <div className="card m-auto md:w-96 bg-base-100 shadow-xl" style={ownerStyle}> 
+      {/*  if is owner */}
+
       {isExploding && <ConfettiExplosion />}
 
       {/* DropDown */}
