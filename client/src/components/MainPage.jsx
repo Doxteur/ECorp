@@ -22,7 +22,8 @@ function MainPage() {
                   () => {
                     document.querySelector(".text-white").style.color =
                       "#ef4444";
-                  },700,
+                  },
+                  700,
                   "E",
                   1000,
                   "E",
@@ -47,7 +48,9 @@ function MainPage() {
           </h1>
 
           <div className="flex align-baseline items-baseline">
-            <h1 className=" md:mt-3 text-2xl mx-2 hidden md:flex">Cliquer pour se connecter </h1>
+            <h1 className=" md:mt-3 text-2xl mx-2 hidden md:flex">
+              Cliquer pour se connecter{" "}
+            </h1>
             <a href="/post" className=" hover:animate-pulse mt-4 mt:mt-0">
               <code className="p-3 font-mono text-lg bg-success text-black rounded-md cursor-pointer">
                 Poster !
@@ -55,6 +58,12 @@ function MainPage() {
             </a>
           </div>
         </main>
+        {/* Version footer */}
+        <div className="absolute bottom-0 w-full h-10 bg-base-100">
+          <div className="flex justify-center items-center h-full">
+            <p className="text-white">{process.env.REACT_APP_ENV} | V{process.env.REACT_APP_VERSION}</p>
+          </div>
+        </div>
       </div>
     </>
   );
