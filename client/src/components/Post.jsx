@@ -224,7 +224,7 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
 
       <ModalAddPost token={token} addPost={addPost} customError={customError} />
 
-      <div className="mt-56">
+      <div className="mt-48">
         <InfiniteScroll
           dataLength={posts.length} //This is important field to render the next data
           next={fetchMoreData}
