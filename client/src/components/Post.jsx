@@ -20,7 +20,7 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
   function modifyPost(e) {
     e.preventDefault();
     axios
-      .get(`http://phplaravel-887910-3078587.cloudwaysapps.com/api/post/${e.target.id}`, {
+      .get(`${process.env.REACT_APP_API_URL}/api/post/${e.target.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -54,7 +54,7 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
     // utilisation de post car laravel ne supporte pas put avec un formData
     axios
       .post(
-        `http://phplaravel-887910-3078587.cloudwaysapps.com/api/post/modify/${body.id}`,
+        `${process.env.REACT_APP_API_URL}/api/post/modify/${body.id}`,
         formDataModify,
         {
           headers: {
@@ -85,7 +85,7 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
     };
 
     axios
-      .delete(`http://phplaravel-887910-3078587.cloudwaysapps.com/api/post/${id}`, {
+      .delete(`${process.env.REACT_APP_API_URL}/api/post/${id}`, {
         headers: headers,
       })
       .then((res) => {
@@ -123,7 +123,7 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
     // print formdata
 
     axios
-      .post("http://phplaravel-887910-3078587.cloudwaysapps.com/api/post?api_token=" + token, formData, {
+      .post(`${process.env.REACT_APP_API_URL}/api/post?api_token=` + token, formData, {
         headers: headers,
       })
       .then((res) => {
@@ -193,7 +193,7 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
   useEffect(() => {
     setTimeout(() => {
       axios
-        .get(`http://phplaravel-887910-3078587.cloudwaysapps.com/api/post?page=${page}`, {
+        .get(`${process.env.REACT_APP_API_URL}/api/post?page=${page}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

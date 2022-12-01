@@ -15,7 +15,7 @@ function setDelay(i) {
     setTimeout(function(){
         
         axios
-        .get("http://phplaravel-887910-3078587.cloudwaysapps.com/api/test", { headers: headers })
+        .get(`${process.env.REACT_APP_API_URL}/api/test`, { headers: headers })
         .then((res) => {
             console.log(i)
                 })

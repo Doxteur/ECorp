@@ -15,7 +15,7 @@ function Register({ token, setToken }) {
     };
 
     //Try to login with the provided credentials
-    axios.post("http://phplaravel-887910-3078587.cloudwaysapps.com/api/register", body).then((res) => {
+    axios.post(`${process.env.REACT_APP_API_URL}/api/register`, body).then((res) => {
       if(res.data.status === "success"){
           setStatus("success");
 

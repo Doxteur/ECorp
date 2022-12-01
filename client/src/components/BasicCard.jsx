@@ -17,7 +17,7 @@ export default function BasicCard({
   const [likecount, setLikecount] = useState(0);
   const [isExploding, setIsExploding] = useState(false);
 
-  const imageLink = "http://phplaravel-887910-3078587.cloudwaysapps.com/images/";
+  const imageLink = `${process.env.REACT_APP_API_URL}/images/`;
 
   // log is user owner of post
   const isOwner = parseInt(user_id) === post.user_id;
@@ -25,7 +25,7 @@ export default function BasicCard({
   if(isOwner){
     // add blue border to owner post
     var ownerStyle = {
-      border: "2px solid cyan",
+      border: "1px solid cyan",
     };
   }
 
@@ -50,7 +50,7 @@ export default function BasicCard({
     }
 
     axios
-      .post(`http://phplaravel-887910-3078587.cloudwaysapps.com/api/like`, body, {
+      .post(`${process.env.REACT_APP_API_URL}/api/like`, body, {
         headers: headers,
       })
       .then((res) => {})

@@ -36,7 +36,7 @@ function LoginForm({ setToken }) {
     };
 
     //Try to login with the provided credentials
-    axios.post("http://phplaravel-887910-3078587.cloudwaysapps.com/api/login", body)
+    axios.post(`${process.env.REACT_APP_API_URL}/api/login`, body)
     .then((res) => {
       if (res.data.api_token) {
         setToken(res.data.api_token);
