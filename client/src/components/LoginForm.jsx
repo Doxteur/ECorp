@@ -36,7 +36,7 @@ function LoginForm({ setToken }) {
     };
 
     //Try to login with the provided credentials
-    axios.post("http://127.0.0.1:8000/api/login", body)
+    axios.post("http://phplaravel-887910-3078587.cloudwaysapps.com/api/login", body)
     .then((res) => {
       if (res.data.api_token) {
         setToken(res.data.api_token);

@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { BsFillGearFill } from "react-icons/bs";
 import Likes from "./Likes";
 import axios from "axios";
-import { useDoubleTap } from 'use-double-tap';
-import ConfettiExplosion from 'react-confetti-explosion';
-
+import { useDoubleTap } from "use-double-tap";
+import ConfettiExplosion from "react-confetti-explosion";
+import RandomImage from "./RandomImage";
 export default function BasicCard({
   post,
   removePost,
@@ -17,8 +17,7 @@ export default function BasicCard({
   const [likecount, setLikecount] = useState(0);
   const [isExploding, setIsExploding] = useState(false);
 
-  const imageLink = "http://127.0.0.1:8000/images/";
-
+  const imageLink = "http://phplaravel-887910-3078587.cloudwaysapps.com/images/";
 
   const handleLike = (e) => {
     e.preventDefault();
@@ -40,7 +39,7 @@ export default function BasicCard({
     }
 
     axios
-      .post(`http://localhost:8000/api/like`, body, {
+      .post(`http://phplaravel-887910-3078587.cloudwaysapps.com/api/like`, body, {
         headers: headers,
       })
       .then((res) => {})
@@ -63,15 +62,12 @@ export default function BasicCard({
 
     setTimeout(() => {
       setIsExploding(false);
-    }
-    , 1000);
-
+    }, 700);
   });
-
 
   return (
     <div className="card m-auto md:w-96 bg-base-100 shadow-xl">
-    {isExploding && <ConfettiExplosion />}
+      {isExploding && <ConfettiExplosion />}
 
       {/* DropDown */}
       <div className="dropdown dropdown-end absolute right-0">
@@ -102,7 +98,6 @@ export default function BasicCard({
 
       {/* BackGround Image */}
       <figure {...bind}>
-
         {post.image ? (
           <img
             src={imageLink + post.image}
@@ -111,7 +106,7 @@ export default function BasicCard({
             style={{ width: "300px" }}
           />
         ) : (
-          <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
+          <RandomImage />
         )}
       </figure>
 
