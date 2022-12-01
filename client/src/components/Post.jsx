@@ -85,7 +85,7 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
     };
 
     axios
-      .delete(`http://www.phplaravel-887910-3078587.cloudwaysapps.com/api/post/${id}`, {
+      .delete(`http://phplaravel-887910-3078587.cloudwaysapps.com/api/post/${id}`, {
         headers: headers,
       })
       .then((res) => {

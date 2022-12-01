@@ -19,6 +19,7 @@ class PostFactory extends Factory
         return [
             'title' => fake()->firstName(),
             'body' => fake()->text(),
+            'user_id' => fake()->numberBetween(1, 6),
         ];
     }
 }
