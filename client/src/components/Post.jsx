@@ -235,9 +235,14 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
               <b>Plus de post disponibles</b>
             </p>
           }
-          refreshFunction={fetchMoreData}
+
+          //refresh page
+          refreshFunction={() => {
+            window.location.reload();
+          }}
+          
           pullDownToRefresh
-          pullDownToRefreshThreshold={50}
+          pullDownToRefreshThreshold={100}
           pullDownToRefreshContent={
             <h3 style={{ textAlign: "center" }}>
               &darr; Relâchez pour rafraîchir &darr;
