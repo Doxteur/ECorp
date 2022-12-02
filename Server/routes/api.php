@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LikesController;
+use App\Http\Controllers\LogsController;
 
 
 /*
@@ -45,6 +46,10 @@ Route::group(['middleware' => ['auth:api']], function () {
     // Inutile pour le moment
     Route::get('/user/{id}', [UserController::class, 'show']);
     Route::get('/user', [UserController::class, 'index']);
+
+    // Logs
+    Route::get('logs', [LogsController::class, 'index']);
+    
     
     // Like routes
     Route::post('/like', [LikesController::class, 'likePost']);
