@@ -15,7 +15,7 @@ function setDelay(i) {
     setTimeout(function(){
         
         axios
-        .get("http://127.0.0.1:8000/api/test", { headers: headers })
+        .get(`${process.env.REACT_APP_API_URL}/api/test`, { headers: headers })
         .then((res) => {
             console.log(i)
                 })

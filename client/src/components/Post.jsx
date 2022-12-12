@@ -20,7 +20,7 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
   function modifyPost(e) {
     e.preventDefault();
     axios
-      .get(`http://localhost:8000/api/post/${e.target.id}`, {
+      .get(`${process.env.REACT_APP_API_URL}/api/post/${e.target.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -54,7 +54,7 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
     // utilisation de post car laravel ne supporte pas put avec un formData
     axios
       .post(
-        `http://localhost:8000/api/post/modify/${body.id}`,
+        `${process.env.REACT_APP_API_URL}/api/post/modify/${body.id}`,
         formDataModify,
         {
           headers: {
@@ -85,7 +85,7 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
     };
 
     axios
-      .delete(`http://www.localhost:8000/api/post/${id}`, {
+      .delete(`${process.env.REACT_APP_API_URL}/api/post/${id}`, {
         headers: headers,
       })
       .then((res) => {
@@ -123,7 +123,7 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
     // print formdata
 
     axios
-      .post("http://localhost:8000/api/post?api_token=" + token, formData, {
+      .post(`${process.env.REACT_APP_API_URL}/api/post?api_token=` + token, formData, {
         headers: headers,
       })
       .then((res) => {
@@ -193,7 +193,7 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
   useEffect(() => {
     setTimeout(() => {
       axios
-        .get(`http://localhost:8000/api/post?page=${page}`, {
+        .get(`${process.env.REACT_APP_API_URL}/api/post?page=${page}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -208,7 +208,7 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
           // redirect
           window.location.href = "/login";
         });
-    }, 700);
+    }, 2000);
   }, [page]);
 
   const fetchMoreData = () => {
@@ -224,22 +224,28 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
 
       <ModalAddPost token={token} addPost={addPost} customError={customError} />
 
-      <div className="mt-56">
+      <div className="mt-48">
         <InfiniteScroll
           dataLength={posts.length} //This is important field to render the next data
           next={fetchMoreData}
           hasMore={hasMore}
-          loader={<h4>Loading...</h4>}
+          loader={<h4>Chargement...</h4>}
           endMessage={
             <p style={{ textAlign: "center" }}>
               <b>Plus de post disponibles</b>
             </p>
           }
-          refreshFunction={fetchMoreData}
+
+          //refresh page
+          refreshFunction={() => {
+            window.location.reload();
+          }}
+          
           pullDownToRefresh
+          pullDownToRefreshThreshold={100}
           pullDownToRefreshContent={
             <h3 style={{ textAlign: "center" }}>
-              &#8595; Tirer pour rafraichir
+              &darr; Relâchez pour rafraîchir &darr;
             </h3>
           }
           // below props only if you need pull down functionality

@@ -9,6 +9,7 @@ import Register from "./components/Register";
 import ModalEditPost from "./components/ModalEditPost";
 import MainPage from "./components/MainPage";
 import ErrorAlert from "./components/ErrorAlert";
+import Logs from "./components/Logs";
 
 function App() {
   const [customError, setCustomError] = useState(null);
@@ -53,6 +54,10 @@ function App() {
         <Route
           path="/register"
           element={<Register token={token} posts={posts} setPosts={setPosts} />}
+        />
+        <Route
+          path="/logs"
+          element={<Logs token={token} posts={posts} setPosts={setPosts} />}
         />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
