@@ -13,7 +13,6 @@ for (i = 1; i <= 4000; ++i) {
 
 function setDelay(i) {
     setTimeout(function(){
-        
         axios
         .get(`${process.env.REACT_APP_API_URL}/api/test`, { headers: headers })
         .then((res) => {
