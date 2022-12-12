@@ -11,9 +11,11 @@
 Les infos de connexion à la base de données pour le fichier env sont dans le google doc
 
 #### Coter serveur
-- cd server && composer install
-- Configurer .env
+- npm run installServer
+- Configurer .env du dossier Server grace au .env.example
+- cd Server
 - php artisan key:generate && php artisan migrate:refresh 
 - php artisan db:seed && php artisan serv
 #### Coter Client
-- cd client && npm install && npm start
+- npm run installClient
+- npm run client

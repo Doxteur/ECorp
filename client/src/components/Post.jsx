@@ -68,6 +68,8 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
           posts.map((post) => (post.id === res.data.id ? res.data : post))
         );
         setModalPost(null);
+
+
       })
       .catch(handleErrors);
   }
@@ -189,7 +191,7 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
     />
   ) : null;
 
-  // Infinite Scroll Method
+  // Infinite Scroll Methode
   useEffect(() => {
     setTimeout(() => {
       axios
@@ -206,9 +208,9 @@ function Post({ token, posts, setPosts, customError, setCustomError }) {
           localStorage.removeItem("token");
           localStorage.removeItem("user_id");
           // redirect
-          window.location.href = "/login";
+          // window.location.href = "/login";
         });
-    }, 2000);
+    }, 1000);
   }, [page]);
 
   const fetchMoreData = () => {

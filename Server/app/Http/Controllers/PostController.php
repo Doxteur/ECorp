@@ -16,6 +16,7 @@ class PostController extends Controller
     {
         // Get all posts inner join table likes
         $posts = Post::with('likes')->orderBy('id', 'desc')->paginate(5);
+
         return response()->json($posts);
     }
 
@@ -63,7 +64,7 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required',
             'body' => 'required',
-            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|mimes:jpeg,jpg|max:2048',
         ]);
 
         $id = $request->input('id');
@@ -106,7 +107,7 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required',
             'body' => 'required',
-            'image' => 'mimes:jpeg,jpg,png|required|max:100000'
+            'image' => 'mimes:jpeg,jpg|required|max:100000'
         ]);
 
         //store image
