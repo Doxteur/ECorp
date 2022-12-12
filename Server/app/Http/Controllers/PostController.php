@@ -8,12 +8,13 @@ use App\Models\Post;
 use Symfony\Component\VarDumper\VarDumper;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
+use App\Models\Logs;
 
 class PostController extends Controller
 {
 
     /**
-     * Récupère tous les messages avec jointure interne à la table des likes
+     * Get all posts
      *
      * @return \Illuminate\Http\Response
      */
@@ -26,7 +27,7 @@ class PostController extends Controller
     }
 
     /**
-     * Récupère un message par son ID
+     * Get all posts with and id
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -39,7 +40,7 @@ class PostController extends Controller
     }
 
     /**
-     * Supprime un message avec vérification de l'autorisation de l'utilisateur
+     * Delete a post with verification of user authorization
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
