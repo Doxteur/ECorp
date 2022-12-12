@@ -14,7 +14,7 @@ class LogsController extends Controller
      */
     public function index()
     {
-        if (auth()->user()->id == 1) {
+        if (auth()->user()->name == "admin") {
             $logs = Logs::orderBy('id', 'desc')->get();
             return response()->json($logs);
         } else {
