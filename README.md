@@ -8,7 +8,7 @@
 
 ### Lancer le projet
 
-Les infos de connexion à la base de données pour le fichier env sont dans le google doc
+Les infos de connexion à la base de données pour le fichier env sont dans le google doc.
 
 ### Coter Base de données
 

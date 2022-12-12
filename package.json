@@ -4,7 +4,7 @@
   "description": "## Lancer le projet",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no tests specified\" && exit 1",
     "client": "cd client && npm start",
     "server": "cd server && php artisan serv",
     "installServer": "cd server && composer install",
