@@ -11,20 +11,33 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    //Retourn la liste des utilisateurs
+    /**
+     * Retrieve a list of all users.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function index()
     {
         return User::all();
     }
-
-    //Récupérer un utilisateur par son id
-    //Non utilisé dans l'application
+    /**
+     * Retrieve a user by their ID.
+     *
+     * @param int $id
+     * @return \Illuminate\Database\Eloquent\Model
+     */
     public function show($id)
     {
         return User::find($id);
     }
 
-    //Authentification
+    /**
+     * Attempt to log in a user with the provided credentials.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+
     public function login(Request $request)
     {
         //Verification du mot de passe
@@ -43,7 +56,7 @@ class UserController extends Controller
             } else {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Mauvais mot de passe',  
+                    'message' => 'Mauvais mot de passe',
                 ]);
             }
         } else {
@@ -53,15 +66,23 @@ class UserController extends Controller
             ]);
         }
     }
+
+    /**
+     * Attempt to register a user with the provided credentials.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+
     public function register(Request $request)
     {
         //Conditions mdp et name
-       
-        //Gestion cas erreur si l'utilisateur existe déjà
-        $check = User::where('name',$request->name)->first();
 
-        
-        if($check){
+        //Gestion cas erreur si l'utilisateur existe déjà
+        $check = User::where('name', $request->name)->first();
+
+
+        if ($check) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Nom d\'utilisateur déjà utilisé'
@@ -78,9 +99,9 @@ class UserController extends Controller
                 'min:6',
                 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%*]).*$/',
             ]
-            ]);
+        ]);
 
-        
+
         //Création de l'utilisateur
         $user = new User();
         $user->name = $request->name;

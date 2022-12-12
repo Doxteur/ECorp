@@ -12,6 +12,12 @@ use Illuminate\Http\Response;
 class PostController extends Controller
 {
 
+    
+    /**
+     * Récupère tous les messages avec jointure interne à la table des likes
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         // Get all posts inner join table likes
@@ -20,20 +26,31 @@ class PostController extends Controller
         return response()->json($posts);
     }
 
-    //get by id
+    /**
+     * Récupère un message par son ID
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
     public function show($id)
     {
         $post = Post::find($id);
         return json_encode($post);
     }
 
-
+    /**
+     * Supprime un message avec vérification de l'autorisation de l'utilisateur
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
         $post = Post::find($id);
         // find user with token sent
         $user = auth()->user();
-        
+
         // check if user is owner of post
         if ($user->id == $post->user_id) {
             $post->likes()->delete();
@@ -53,12 +70,15 @@ class PostController extends Controller
         }
     }
 
-    //modify
 
+    /**
+     * Met à jour un message avec vérification de l'autorisation de l'utilisateur
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request)
     {
-
-        // return formdata
 
         //Validate request
         $request->validate([
@@ -101,6 +121,13 @@ class PostController extends Controller
         return $post;
     }
 
+    /**
+     * Créer un nouveau post
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
     public function store(Request $request)
     {
         //Validate request
@@ -125,13 +152,10 @@ class PostController extends Controller
         return $post;
     }
 
-
-
     // test pagination
     public function paginationTest()
     {
         $posts = Post::paginate(5);
         return json_encode($posts);
     }
-
 }
