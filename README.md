@@ -10,6 +10,8 @@
 
 Les infos de connexion à la base de données pour le fichier env sont dans le google doc
 
+### Coter Base de données
+- Créer une base de données nommée `TP_YNOV_LARAVEL`
 #### Coter serveur
 - npm run installServer
 - Configurer .env du dossier Server grace au .env.example

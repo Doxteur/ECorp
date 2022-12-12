@@ -12,7 +12,6 @@ use Illuminate\Http\Response;
 class PostController extends Controller
 {
 
-    
     /**
      * Récupère tous les messages avec jointure interne à la table des likes
      *
