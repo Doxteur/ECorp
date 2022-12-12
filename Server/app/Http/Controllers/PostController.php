@@ -60,8 +60,16 @@ class PostController extends Controller
             //delete image
             $image_path = public_path('images/' . $post->image);
 
+
             //delete image from folder
             @unlink($image_path);
+
+            // add log
+            $log = new Logs();
+            $log->id_user = $user->id;
+            $log->action = 'delete';
+            $log->save();
+
 
             return response()->json(['message' => 'Post deleted successfully']);
         } else {
@@ -118,6 +126,12 @@ class PostController extends Controller
         $post->image = $image_name;
 
         $post->save();
+
+        $log = new Logs();
+        $log->id_user = $user->id;
+        $log->action = 'Modify';
+        $log->save();
+
         return $post;
     }
 
@@ -149,6 +163,13 @@ class PostController extends Controller
         $post->body = $request->body;
         $post->image = $image_name;
         $post->save();
+
+        $user = auth()->user();
+        $log = new Logs();
+        $log->id_user = $user->id;
+        $log->action = 'Ajout';
+        $log->save();
+
         return $post;
     }
 

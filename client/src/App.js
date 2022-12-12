@@ -57,7 +57,7 @@ function App() {
         />
         <Route
           path="/logs"
-          element={<Logs token={token} posts={posts} setPosts={setPosts} />}
+          element={<Logs token={token} />}
         />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

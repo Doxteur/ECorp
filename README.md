@@ -34,3 +34,11 @@ Les infos de connexion à la base de données pour le fichier env sont dans le g
 - [ ] Vérifier que le serveur est bien lancé
 - [ ] Vérifier les infos de connexion à la base de données dans le fichier .env du dossier Server (Le nom de la base doit être le meme que celui dans le fichier .env du dossier Server)
 - [ ] Vérifier que le fichier .env du dossier Server est bien dans le dossier Server
+
+# Documentation
+
+- [ ] [Laravel](https://laravel.com/docs/5.8)
+- [ ] [React](https://reactjs.org/docs/getting-started.html)
+- [ ] [React Router](https://reacttraining.com/react-router/web/guides/quick-start)
+- [ ] [React Bootstrap](https://react-bootstrap.github.io/getting-started/introduction)
+

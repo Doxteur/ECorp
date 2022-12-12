@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Symfony\Component\VarDumper\VarDumper;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Logs;
 
 class UserController extends Controller
 {
@@ -48,6 +49,12 @@ class UserController extends Controller
             if (Hash::check($request->password, $user->password)) {
                 $user->api_token = Str::random(80);
                 $user->save();
+                
+                $log = new Logs();
+                $log->id_user = $user->id;
+                $log->action = 'Login de l utilisateur';
+                $log->save();
+
                 return response()->json([
                     'status' => 'success',
                     'api_token' => $user->api_token,
@@ -108,6 +115,13 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->api_token = Str::random(80);
         $user->save();
+
+        // add log
+        $log = new Logs();
+        $log->id_user = $user->id;
+        $log->action = 'Création de l\'utilisateur';
+        $log->save();
+
         return response()->json([
             'status' => 'success',
             'api_token' => $user->api_token

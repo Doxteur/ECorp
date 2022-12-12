@@ -56,6 +56,9 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('/unlike', [LikesController::class, 'unlikePost']);
     Route::get('/likes/{iduser}', [LikesController::class, 'getLikes']);
 
+    // get log
+    Route::get('/logs', [LogsController::class, 'index']);
+
 });
 
 //Test à enlever pour la prod

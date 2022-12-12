@@ -9,6 +9,8 @@ class Logs extends Model
 {
     use HasFactory;
     
-    protected $table = 'Logs';
-    protected $fillable = ['id', 'id_user', 'action', 'date'];
+    protected $table = 'logs';
+    protected $fillable = ['id', 'id_user', 'action'];
+    public $timestamps = false;
+
 }
