@@ -7,7 +7,11 @@ use App\Models\Logs;
 
 class LogsController extends Controller
 {
-    //
+    /**
+     * Display a listing of the Logs.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         if (auth()->user()->id == 1) {

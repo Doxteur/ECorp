@@ -60,7 +60,6 @@ class PostController extends Controller
             //delete image
             $image_path = public_path('images/' . $post->image);
 
-
             //delete image from folder
             @unlink($image_path);
 
@@ -69,7 +68,6 @@ class PostController extends Controller
             $log->id_user = $user->id;
             $log->action = 'delete';
             $log->save();
-
 
             return response()->json(['message' => 'Post deleted successfully']);
         } else {
@@ -112,7 +110,7 @@ class PostController extends Controller
             $image_path = public_path('images/' . $image_name);
             @unlink($image_path);
 
-            //store image
+            //Get the image
             $image = $request->file('image');
 
             // Sauvegarde de l'image dans le dossier images
